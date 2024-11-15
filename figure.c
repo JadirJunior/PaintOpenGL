@@ -9,8 +9,8 @@
 
 void recalculatingPoints(float* xi, float* yi, float* xf, float* yf) {
     float aux1, aux2;
-    float xSide = fmax((*xf) - (*xi), (*xi) - (*xf));
-    float ySide = fmax((*yf) - (*yi), (*yi) - (*yf));
+    float xSide = fmaxf((*xf) - (*xi), (*xi) - (*xf));
+    float ySide = fmaxf((*yf) - (*yi), (*yi) - (*yf));
 
     if ( (*xf) < (*xi) && (*yf) < (*yi)) {
         aux1 = *xi, aux2 = *yi;
