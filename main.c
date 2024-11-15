@@ -5,6 +5,10 @@
 #include <time.h>
 #include <GL/glut.h>
 
+#define FREEGLUT_STATIC
+#define _LIB
+#define FREEGLUT_LIB_PRAGMAS 0
+
 int cont;
 int windowWidth = 500;
 int windowHeight = 500;
