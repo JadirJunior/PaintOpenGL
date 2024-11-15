@@ -4,6 +4,10 @@
 #include <gl/glut.h>
 #include <math.h>
 
+#define FREEGLUT_STATIC
+#define _LIB
+#define FREEGLUT_LIB_PRAGMAS 0
+
 #define PI 3.1415
 
 

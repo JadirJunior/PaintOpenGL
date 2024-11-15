@@ -1,0 +1,83 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\figure.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:figure.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\DBForms.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DBForms.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DBForms.c",
+              "DocumentMoniker": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\DBForms.c",
+              "RelativeDocumentMoniker": "DBForms.c",
+              "ToolTip": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\DBForms.c",
+              "RelativeToolTip": "DBForms.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-15T12:19:41.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "figure.c",
+              "DocumentMoniker": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\figure.c",
+              "RelativeDocumentMoniker": "figure.c",
+              "ToolTip": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\figure.c",
+              "RelativeToolTip": "figure.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-15T12:19:37.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.c",
+              "DocumentMoniker": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\main.c",
+              "RelativeDocumentMoniker": "main.c",
+              "ToolTip": "C:\\Users\\ze\\Desktop\\FACULDADe\\ESTGD - PORTUGAL\\Computacao Grafica\\projetos\\PaintOpenGL\\main.c",
+              "RelativeToolTip": "main.c",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
+              "WhenOpened": "2024-11-15T12:19:27.128Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

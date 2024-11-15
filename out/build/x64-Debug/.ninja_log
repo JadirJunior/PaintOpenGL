@@ -1,0 +1,11 @@
+# ninja log v5
+12	85	7533763716911137	CMakeFiles/PaintOpenGL.dir/DBForms.c.obj	f361fa3cb986425d
+3	188	7533763717939451	CMakeFiles/PaintOpenGL.dir/main.c.obj	aeb758ece1d277c4
+20	203	7533763718085841	CMakeFiles/PaintOpenGL.dir/figure.c.obj	562042f4055773bb
+3	15	0	clean	8c45b54705a541e8
+15	81	7533769404677140	CMakeFiles/PaintOpenGL.dir/DBForms.c.obj	f361fa3cb986425d
+5	189	7533769405758854	CMakeFiles/PaintOpenGL.dir/main.c.obj	aeb758ece1d277c4
+23	201	7533769405858452	CMakeFiles/PaintOpenGL.dir/figure.c.obj	562042f4055773bb
+12	79	7533771011054963	CMakeFiles/PaintOpenGL.dir/DBForms.c.obj	f361fa3cb986425d
+3	205	7533771012138754	CMakeFiles/PaintOpenGL.dir/main.c.obj	aeb758ece1d277c4
+21	224	7533771012319702	CMakeFiles/PaintOpenGL.dir/figure.c.obj	562042f4055773bb
