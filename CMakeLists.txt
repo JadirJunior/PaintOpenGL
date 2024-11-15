@@ -12,6 +12,7 @@ add_executable(PaintOpenGL main.c
         DBForms.c
         headers/figure.h
         headers/DBForms.h
-        figure.c)
+        figure.c
+        headers/screenHandle.h)
 
 target_link_libraries(PaintOpenGL opengl32 freeglut_static glu32 freeglut)
