@@ -5,6 +5,8 @@
 #include <time.h>
 #include <GL/glut.h>
 
+#include "headers/toolbar.h"
+
 #define FREEGLUT_STATIC
 #define _LIB
 #define FREEGLUT_LIB_PRAGMAS 0
@@ -20,7 +22,6 @@ float gState = 1.0;
 float bState = 1.0;
 float deltaColor = 0.1;
 
-
 int creatingForm = 0;
 
 Form selectedForm = NULL;
@@ -30,6 +31,8 @@ Form activeColor;
 
 int xLastClick;
 int yLastClick;
+
+int yToolBarSize = 40;
 
 // Color Pallete
 Form* palette;
@@ -132,7 +135,6 @@ void mykey(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-
 void myMouseTools(GLint button, GLint state, GLint x, GLint y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         int i;
@@ -213,8 +215,8 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
 
     y = windowHeight - y;
 
-    if (y < 40) {
-        myMouseTools(button, state, x, y);
+    if (pickRegion(x, y) != -1) {
+        //myMouseTools(button, state, x, y);
     }
     else {
         myMouseCanvas(button, state, x, y);
@@ -243,7 +245,6 @@ void init(int width, int height) {
     palette[4] = newSquare(160, 10, 20);
     setBackgroundColor(palette[4], 0.0, 1.0, 1.0);
 
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, width, 0.0, height);
@@ -252,6 +253,7 @@ void init(int width, int height) {
 void reShape(int width, int height) {
     windowHeight = height;
     windowWidth = width;
+    resize(windowWidth, yToolBarSize);
     glViewport(0, 0, width, height);
     init(width, height);
 }
@@ -276,8 +278,8 @@ int main(int argc, char** argv) {
     srand(time(NULL));
     cont = 0;
     initDBForms(10);
-
     printForms();
+    createToolBar(windowWidth, yToolBarSize);
 
     glutInit(&argc, argv);
     setupOpenGL();
