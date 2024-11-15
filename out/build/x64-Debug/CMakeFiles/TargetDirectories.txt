@@ -1,3 +1,0 @@
-C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/out/build/x64-Debug/CMakeFiles/PaintOpenGL.dir
-C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
