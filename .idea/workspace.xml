@@ -30,7 +30,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9477f66-b1e4-4bdc-a5d1-d8202bab7f7a" name="Changes" comment="feat: Finishing CMake">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +43,9 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/main.c" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
@@ -118,7 +120,7 @@
       <workItem from="1731667446956" duration="253000" />
       <workItem from="1731667719276" duration="1524000" />
       <workItem from="1731673986421" duration="38000" />
-      <workItem from="1731674032556" duration="2034000" />
+      <workItem from="1731674032556" duration="2524000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Configuring the environment">
       <option name="closed" value="true" />
