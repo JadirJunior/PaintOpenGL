@@ -8,6 +8,7 @@
 /dataSources.local.xml
 
 .idea
+.idea/*
 cmake-build-debug
 out
 CMakeLists.txt
