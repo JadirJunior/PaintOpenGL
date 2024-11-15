@@ -51,6 +51,8 @@ void displayForms() {
 
     drawForm(activeColor);
 
+    drawToolBar();
+
     for (int i = 0; i < nPalleteColors; i++) {
         drawForm(palette[i]);
     }
@@ -214,8 +216,25 @@ void mousePassiveMotion(int x, int y) {
 void mouseClick(GLint button, GLint state, GLint x, GLint y) {
 
     y = windowHeight - y;
+    int region = pickRegion(x, y);
 
-    if (pickRegion(x, y) != -1) {
+    if (region != -1) {
+
+        switch (region)
+        {
+            case REGION_ACTIVE:
+                printf("Region active\n");
+                break;
+            case REGION_COLOR:
+                pickColor(activeColor, x, y);
+                rState = activeColor->r;
+                gState = activeColor->g;
+                bState = activeColor->b;
+                break;
+            default:
+                printf("Resto\n");
+                break;
+        }
         //myMouseTools(button, state, x, y);
     }
     else {
@@ -228,22 +247,6 @@ void init(int width, int height) {
     setBackgroundColor(activeColor, rState, gState, bState);
 
     // Create array of pallete
-    nPalleteColors = 5;
-    palette = malloc(sizeof(Form) * nPalleteColors);
-    palette[0] = newSquare(40, 10, 20);
-    setBackgroundColor(palette[0], 1.0, 0.0, 0.0);
-
-    palette[1] = newSquare(70, 10, 20);
-    setBackgroundColor(palette[1], 0.0, 1.0, 0.0);
-    
-    palette[2] = newSquare(100, 10, 20);
-    setBackgroundColor(palette[2], 0.0, 0.0, 1.0);
-    
-    palette[3] = newSquare(130, 10, 20);
-    setBackgroundColor(palette[3], 1.0, 1.0, 0.0);
-    
-    palette[4] = newSquare(160, 10, 20);
-    setBackgroundColor(palette[4], 0.0, 1.0, 1.0);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();

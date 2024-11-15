@@ -22,8 +22,8 @@
 
 //Defining ToolBar percentual sections
 #define TOOLBAR_ACTIVE 0.1f
-#define TOOLBAR_COLOR 0.2f
-#define TOOLBAR_FORMS 0.4f
+#define TOOLBAR_COLOR 0.4f
+#define TOOLBAR_FORMS 0.2f
 #define TOOLBAR_MODES 0.3f
 
 
