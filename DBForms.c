@@ -14,6 +14,8 @@ int actualPosition;
 
 int N;
 
+//teste alteracao pro git
+
 void initDBForms(int number) {
     N = number;
     figuras = malloc(sizeof(Form) * N);
