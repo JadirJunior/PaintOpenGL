@@ -10,8 +10,8 @@ link_directories(D:/minGw/lib)
 
 add_executable(PaintOpenGL main.c
         DBForms.c
-        headers/figura.h
+        headers/figure.h
         headers/DBForms.h
-        figura.c)
+        figure.c)
 
 target_link_libraries(PaintOpenGL opengl32 freeglut_static glu32 freeglut)
