@@ -21,14 +21,14 @@
 
 
 //Defining ToolBar percentual sections
-#define TOOLBAR_ACTIVE 0.1f
-#define TOOLBAR_COLOR 0.4f
-#define TOOLBAR_FORMS 0.2f
-#define TOOLBAR_MODES 0.3f
+// #define TOOLBAR_ACTIVE 0.1f
+#define TOOLBAR_COLOR 0.35f
+#define TOOLBAR_FORMS 0.35f
+#define TOOLBAR_MODES 0.30f
 
 
 int pickRegion(float x, float y);
-void createToolBar(float toolBarX, float toolBarY);
+void createToolBar(Form actualForm, float toolBarX, float toolBarY);
 
 void resize(float newWidth, float newHeight);
 void drawToolBar();

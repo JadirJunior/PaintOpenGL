@@ -81,6 +81,12 @@ Form newRectangle2Point(float xi, float yi, float xf, float yf) {
     return newForm(xi, yi, xf-xi, yf-yi, RECTANGLE);
 }
 
+Form newForm2Point(float xi, float yi, float xf, float yf, int type) {
+    recalculatingPoints(&xi, &yi, &xf, &yf);
+
+    return newForm(xi, yi, xf-xi, yf-yi, type);
+}
+
 Form newTriangleIsoC(float x, float y, float xSize, float ySize) {
     return newFormC(x, y, xSize, ySize, TRIANGLE_ISO);
 }
@@ -245,7 +251,6 @@ void drawRectangle(Form f) {
     glEnd();
 
 
-    glFlush();
 }
 
 void drawTriangle(Form f) {
@@ -264,8 +269,6 @@ void drawTriangle(Form f) {
         glVertex2f(f->x + (f->xSize / 2.0), f->y + f->ySize);
         glVertex2f(f->x + f->xSize, f->y);
     glEnd();
-
-    glFlush();
 }
 
 void drawCircle(Form f, float radius, float faces) {
@@ -275,6 +278,7 @@ void drawCircle(Form f, float radius, float faces) {
 
     float step = (2 * PI) / faces;
 
+    glColor3f(f->r, f->g, f->b);
     glBegin(GL_POLYGON);
     for (float i = 0; i < 2*PI; i += step) {
         float x = centerX + radius * cos(i);
@@ -284,7 +288,6 @@ void drawCircle(Form f, float radius, float faces) {
     }
 
     glEnd();
-    glFlush();
 
 }
 
@@ -294,7 +297,7 @@ void drawTriangleEq(Form f) {
     glColor3f(f->r, f->g, f->b);
     glBegin(GL_TRIANGLE_FAN);
         glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2), f->y - (f->ySize) );
+        glVertex2f(f->x + (f->xSize / 2), f->y + (f->ySize) );
         glVertex2f(f->x + (f->xSize), f->y);
     glEnd();
 
@@ -303,11 +306,9 @@ void drawTriangleEq(Form f) {
     glColor3f(1.0, 1.0, 1.0);
     glBegin(GL_LINE_LOOP);
         glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2), f->y - (f->ySize));
+        glVertex2f(f->x + (f->xSize / 2), f->y + (f->ySize));
         glVertex2f(f->x + (f->xSize), f->y);
     glEnd();
-
-    glFlush();
 
 }
 

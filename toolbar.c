@@ -22,7 +22,7 @@ int nForms = 4;
 float ySize = 40;
 float xSize = 500;
 
-float sizeRegionActive = 0;
+float sizeRegionActive = 50;
 float sizeRegionColor = 0;
 float sizeRegionForms = 0;
 float sizeRegionMode = 0;
@@ -35,19 +35,13 @@ float xStartMode = 0;
 
 
 void setRegions() {
-    sizeRegionActive = xSize * TOOLBAR_ACTIVE;
-    sizeRegionColor = xSize * TOOLBAR_COLOR;
-    sizeRegionForms = xSize * TOOLBAR_FORMS;
-    sizeRegionMode = xSize * TOOLBAR_MODES;
+    sizeRegionColor = (xSize - sizeRegionActive) * TOOLBAR_COLOR;
+    sizeRegionForms = (xSize - sizeRegionActive) * TOOLBAR_FORMS;
+    sizeRegionMode = (xSize - sizeRegionActive) * TOOLBAR_MODES;
 
     xStartColors = sizeRegionActive;
     xStartForms = sizeRegionActive + sizeRegionColor;
     xStartMode = sizeRegionActive + sizeRegionColor + sizeRegionForms;
-
-    // printf("Ativa: %f\n", sizeRegionActive);
-    // printf("Cor: %f\n", sizeRegionColor);
-    // printf("Forms: %f\n", sizeRegionForms);
-    // printf("Modo: %f\n", sizeRegionMode);
 }
 
 void resize(float newWidth, float newHeight) {
@@ -60,6 +54,13 @@ void resize(float newWidth, float newHeight) {
         if (palette[i] != NULL)
         {
             palette[i]->x = xStartColors + 10 + ( 30*i );
+        }
+    }
+
+    for (int i = 0; i < nForms; i++) {
+        if (forms[i] != NULL)
+        {
+            forms[i]->x = xStartForms + 10 + ( 30*i );
         }
     }
 
@@ -86,8 +87,6 @@ void drawLinesToolBar() {
     glVertex2f(0, ySize);
     glVertex2f(sizeRegionActive+sizeRegionColor+sizeRegionForms+sizeRegionMode, ySize);
     glEnd();
-
-    glFlush();
 }
 
 void drawToolBar() {
@@ -103,35 +102,70 @@ void drawToolBar() {
         }
     }
 
+    for (int i = 0; i < nForms; i++)
+    {
+        if (forms[i] != NULL)
+        {
+            drawForm(forms[i]);
+        }
+    }
+
 }
 
+void setPalettes()
+{
+    palette = malloc(sizeof(Form) * nPalettes);
 
-void createToolBar(const float toolBarX, const float toolBarY) {
+    palette[0] = newSquare(xStartColors, ySize/2 - 10, 20);
+    setBackgroundColor(palette[0], 1.0, 0.0, 0.0);
+
+    palette[1] = newSquare(xStartColors + 30, ySize/2 - 10, 20);
+    setBackgroundColor(palette[1], 1.0, 0.0, 1.0);
+
+    palette[2] = newSquare(xStartColors + 60, ySize/2 - 10, 20);
+    setBackgroundColor(palette[2], 0.0, 1.0, 0.0);
+
+    palette[3] = newSquare(xStartColors + 90, ySize/2 - 10, 20);
+    setBackgroundColor(palette[3], 0.0, 0.0, 1.0);
+
+    palette[4] = newSquare(xStartColors + 120, ySize/2 - 10, 20);
+    setBackgroundColor(palette[4], 1.0, 1.0, 0.0);
+
+    palette[5] = newSquare(xStartColors + 150, ySize/2 - 10, 20);
+    setBackgroundColor(palette[5], 0.0, 1.0, 1.0);
+}
+
+void setForms()
+{
+    forms = malloc(sizeof(Form) * nForms);
+
+    forms[0] = newSquare(xStartForms, ySize/2 - 10, 20);
+    forms[1] = newCircle(xStartForms + 30, ySize/2 - 10, 20);
+    forms[2] = newTriangleEq(xStartForms + 60, ySize/2 - 10, 20);
+    forms[3] = newHexagon(xStartForms + 90, ySize/2 - 10, 20, 20);
+}
+
+void setMode()
+{
+
+}
+
+void createToolBar(Form actualForm, const float toolBarX, const float toolBarY) {
     xSize = toolBarX;
     ySize = toolBarY;
     setRegions();
 
+    actualForm->x = xStartActive + (sizeRegionActive/4);
+    actualForm->y = ySize/2 - 10;
+
     //Criando as formas para alterar a cor
-    palette = malloc(sizeof(Form) * nPalettes);
-    float startX = sizeRegionActive + 10;
+    setPalettes();
 
-    palette[0] = newSquare(startX, ySize/2 - 10, 20);
-    setBackgroundColor(palette[0], 1.0, 0.0, 0.0);
+    //Criando as formas para alterar a forma
+    setForms();
 
-    palette[1] = newSquare(startX + 30, ySize/2 - 10, 20);
-    setBackgroundColor(palette[1], 1.0, 0.0, 1.0);
-
-    palette[2] = newSquare(startX + 60, ySize/2 - 10, 20);
-    setBackgroundColor(palette[2], 0.0, 1.0, 0.0);
-
-    palette[3] = newSquare(startX + 90, ySize/2 - 10, 20);
-    setBackgroundColor(palette[3], 0.0, 0.0, 1.0);
-
-    palette[4] = newSquare(startX + 120, ySize/2 - 10, 20);
-    setBackgroundColor(palette[4], 1.0, 1.0, 0.0);
-
-    palette[5] = newSquare(startX + 150, ySize/2 - 10, 20);
-    setBackgroundColor(palette[5], 0.0, 1.0, 1.0);
+    //Criando as formas para alterar o modo
+    setMode();
 }
 
 void pickColor(Form actualForm, float x, float y) {
@@ -145,6 +179,21 @@ void pickColor(Form actualForm, float x, float y) {
     }
     if (f == NULL) return;
     setBackgroundColor(actualForm, f->r, f->g, f->b);
+}
+
+void pickChangeForm(Form actualForm, float x, float y)
+{
+    Form f = NULL;
+    for (int i = 0; i < nForms;i++)
+    {
+        if (forms[i] != NULL && pickForm(forms[i], x, y)) {
+            f = forms[i];
+            break;
+        }
+    }
+    if (f == NULL) return;
+
+    actualForm->type = f->type;
 }
 
 

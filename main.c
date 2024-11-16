@@ -34,9 +34,6 @@ int yLastClick;
 
 int yToolBarSize = 40;
 
-// Color Pallete
-Form* palette;
-int nPalleteColors;
 
 void displayForms() {
     srand(time(NULL));
@@ -48,15 +45,10 @@ void displayForms() {
 
 
     drawAllForms();
-
+    drawToolBar();
     drawForm(activeColor);
 
-    drawToolBar();
-
-    for (int i = 0; i < nPalleteColors; i++) {
-        drawForm(palette[i]);
-    }
-
+    glFlush();
 }
 
 void insertForm(int x, int y) {
@@ -137,29 +129,10 @@ void mykey(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
-void myMouseTools(GLint button, GLint state, GLint x, GLint y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        int i;
-
-        for (i = 0; i < nPalleteColors; i++) {
-            if (pickForm(palette[i], x, y)) {
-                float colors[3];
-                getBGColor(palette[i], colors);
-                rState = colors[0];
-                gState = colors[1];
-                bState = colors[2];
-                glutPostRedisplay();
-                setBackgroundColor(activeColor, rState, gState, bState);
-                break;
-            }
-        }
-    }
-}
-
 void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         printf("LEFT BUTTON PRESSED\n");
-        if (type == RECTANGLE) {
+        // if (type == RECTANGLE) {
             if (creatingForm) {
                 recalculate(selectedForm, x, y);
                 creatingForm = 0;
@@ -168,7 +141,7 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
             }
             else {
                 //First click
-                selectedForm = newRectangle2Point(x, y, x, y);
+                selectedForm = newForm2Point(x, y, x, y, type);
                 setBackgroundColor(selectedForm, rState, gState, bState);
 
                 if (!insertDBForm(selectedForm)) {
@@ -181,10 +154,10 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
                     glutPostRedisplay();
                 }
             }
-        }
-        else {
-            insertForm(x, y);
-        }
+        // }
+        // else {
+        //     insertForm(x, y);
+        // }
 
     }
     else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
@@ -231,11 +204,15 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 gState = activeColor->g;
                 bState = activeColor->b;
                 break;
+            case REGION_FORMS:
+                pickChangeForm(activeColor, x, y);
+                type = activeColor->type;
+                setBackgroundColor(activeColor, rState, gState, bState);
+                break;
             default:
                 printf("Resto\n");
                 break;
         }
-        //myMouseTools(button, state, x, y);
     }
     else {
         myMouseCanvas(button, state, x, y);
@@ -243,11 +220,6 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
 }
 
 void init(int width, int height) {
-    activeColor = newSquare(10, 10, 20);
-    setBackgroundColor(activeColor, rState, gState, bState);
-
-    // Create array of pallete
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, width, 0.0, height);
@@ -282,7 +254,9 @@ int main(int argc, char** argv) {
     cont = 0;
     initDBForms(10);
     printForms();
-    createToolBar(windowWidth, yToolBarSize);
+    activeColor = newSquare(10, 10, 20);
+    setBackgroundColor(activeColor, rState, gState, bState);
+    createToolBar(activeColor, windowWidth, yToolBarSize);
 
     glutInit(&argc, argv);
     setupOpenGL();
