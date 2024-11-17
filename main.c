@@ -1,11 +1,12 @@
 #include "headers/figure.h"
 #include "headers/DBForms.h"
+#include "headers/toolbar.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <GL/glut.h>
 
-#include "headers/toolbar.h"
 
 #define FREEGLUT_STATIC
 #define _LIB
