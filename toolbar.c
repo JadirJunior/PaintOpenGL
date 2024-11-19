@@ -178,7 +178,11 @@ void pickColor(Form actualForm, float x, float y) {
         }
     }
     if (f == NULL) return;
-    setBackgroundColor(actualForm, f->r, f->g, f->b);
+    int r, g, b;
+    r = f->r;
+    g = f->g;
+    b = f->b;
+    setBackgroundColor(actualForm, r, g, b);
 }
 
 void pickChangeForm(Form actualForm, float x, float y)
@@ -193,7 +197,8 @@ void pickChangeForm(Form actualForm, float x, float y)
     }
     if (f == NULL) return;
 
-    actualForm->type = f->type;
+    int type = f->type;
+    actualForm->type = type;
 }
 
 
