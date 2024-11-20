@@ -7,6 +7,7 @@
 #define HEXAGON 3
 #define CIRCLE 4
 #define TRIANGLE_EQ 5
+#define STAR 6
 
 typedef struct form* Form;
 
@@ -34,6 +35,7 @@ Form newCircleC(float x, float y, float radius);
 Form newTriangleEqC(float x, float y, float side);
 Form newRectangle2Point(float xi, float yi, float xf, float yf);
 Form newForm2Point(float xi, float yi, float xf, float yf, int type);
+Form newCircle2Point(float xi, float yi, float xf, float yf);
 
 //Check if XY is inside form
 int pickForm(Form f, float x, float y);

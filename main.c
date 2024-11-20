@@ -17,7 +17,7 @@ int windowWidth = 500;
 int windowHeight = 500;
 
 // state variable
-int type = RECTANGLE;
+int type = SQUARE;
 float rState = 1.0;
 float gState = 1.0;
 float bState = 1.0;
@@ -44,10 +44,11 @@ void displayForms() {
 
     printf("Contador: %d\n", cont);
 
+    drawForm(activeColor);
+    printf("Active Color (X, Y): %f, %f\n", activeColor->x, activeColor->y);
 
     drawAllForms();
     drawToolBar();
-    drawForm(activeColor);
 
     glFlush();
 }
@@ -80,53 +81,53 @@ void mykey(unsigned char key, int x, int y)
     if (key == 'Q' | key == 'q')
         exit(0);
 
-    switch (key) {
-        case 'r':
-        case 'R':
-            type = RECTANGLE; break;
-        case 't':
-        case 'T':
-            type = TRIANGLE_ISO; break;
-        case 's':
-        case 'S':
-            type = SQUARE; break;
-        case '1':
-            rState += deltaColor; 
-            if (rState > 1.0) rState = 1.0;
-            break;
-        case '2':
-            gState += deltaColor;
-            if (gState > 1.0) gState = 1.0;
-            break;
-        case '3':
-            bState += deltaColor;
-            if (bState > 1.0) bState = 1.0;
-            break;
-        
-        case '4':
-            rState -= deltaColor; 
-            if (rState < 0.0) rState = 0.0;
-            break;
-        case '5':
-            gState -= deltaColor;
-            if (gState < 0.0) gState = 0.0;
-            break;
-        case '6':
-            bState -= deltaColor;
-            if (bState < 0.0) bState = 0.0;
-            break;
-
-        case 'i':
-        case 'I':
-            insertForm(x, y);
-            break;
-
-        case 'd':
-        case 'D':
-            deleteScreenForm(x, y);
-
-    }
-    setBackgroundColor(activeColor, rState, gState, bState);
+    // switch (key) {
+    //     case 'r':
+    //     case 'R':
+    //         type = RECTANGLE; break;
+    //     case 't':
+    //     case 'T':
+    //         type = TRIANGLE_ISO; break;
+    //     case 's':
+    //     case 'S':
+    //         type = SQUARE; break;
+    //     case '1':
+    //         rState += deltaColor;
+    //         if (rState > 1.0) rState = 1.0;
+    //         break;
+    //     case '2':
+    //         gState += deltaColor;
+    //         if (gState > 1.0) gState = 1.0;
+    //         break;
+    //     case '3':
+    //         bState += deltaColor;
+    //         if (bState > 1.0) bState = 1.0;
+    //         break;
+    //
+    //     case '4':
+    //         rState -= deltaColor;
+    //         if (rState < 0.0) rState = 0.0;
+    //         break;
+    //     case '5':
+    //         gState -= deltaColor;
+    //         if (gState < 0.0) gState = 0.0;
+    //         break;
+    //     case '6':
+    //         bState -= deltaColor;
+    //         if (bState < 0.0) bState = 0.0;
+    //         break;
+    //
+    //     case 'i':
+    //     case 'I':
+    //         insertForm(x, y);
+    //         break;
+    //
+    //     case 'd':
+    //     case 'D':
+    //         deleteScreenForm(x, y);
+    //
+    // }
+    //setBackgroundColor(activeColor, rState, gState, bState);
     glutPostRedisplay();
 }
 
@@ -142,23 +143,23 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
             }
             else {
                 //First click
-                selectedForm = newForm2Point(x, y, x, y, type);
+                if (type == CIRCLE) {
+                    selectedForm = newCircle2Point(x, y, x, y);
+                } else {
+                    selectedForm = newForm2Point(x, y, x, y, type);
+                }
+
                 setBackgroundColor(selectedForm, rState, gState, bState);
 
                 if (!insertDBForm(selectedForm)) {
                     printf("MEMORY FULL!!\n");
                     deleteForm(selectedForm);
                     selectedForm = NULL;
-                }
-                else {
+                } else {
                     creatingForm = 1;
                     glutPostRedisplay();
                 }
             }
-        // }
-        // else {
-        //     insertForm(x, y);
-        // }
 
     }
     else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {

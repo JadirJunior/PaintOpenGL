@@ -82,9 +82,15 @@ Form newRectangle2Point(float xi, float yi, float xf, float yf) {
 }
 
 Form newForm2Point(float xi, float yi, float xf, float yf, int type) {
-    recalculatingPoints(&xi, &yi, &xf, &yf);
+    //recalculatingPoints(&xi, &yi, &xf, &yf);
 
     return newForm(xi, yi, xf-xi, yf-yi, type);
+}
+
+Form newCircle2Point(float xi, float yi, float xf, float yf) {
+    //recalculatingPoints(&xi, &yi, &xf, &yf);
+    float r = sqrt(pow((xf-xi), 2) + pow((yf-yi), 2));
+    return newCircle(xi, yi, r);
 }
 
 Form newTriangleIsoC(float x, float y, float xSize, float ySize) {
@@ -99,10 +105,14 @@ Form newHexagonC(float x, float y, float xSize, float ySize) {
     return newFormC(x, y, xSize, ySize, HEXAGON);
 }
 
+Form newStar(float x, float y, float xSize, float ySize) {
+    return newForm(x, y, xSize, ySize, STAR);
+}
+
+
 Form newCircle(float x, float y, float radius) {
     return newForm(x, y, radius, radius, CIRCLE);
 }
-
 
 Form newCircleC(float x, float y, float radius) {
     return newFormC(x, y, radius, radius, CIRCLE);
@@ -114,6 +124,25 @@ Form newTriangleEq(float x, float y, float side) {
 
 Form newTriangleEqC(float x, float y, float side) {
     return newFormC(x, y, side, ((side * sqrtf(3)) / 2), TRIANGLE_EQ);
+}
+
+void formatSize(Form f) {
+    if ((f->xSize < 0 && f->ySize < 0)) { //Terceiro quadrante
+        f->xSize = abs(f->xSize) < abs(f->ySize) ? f->ySize : f->xSize;
+        f->ySize = f->xSize;
+    } else if ( (f->xSize < 0 && f->ySize > 0) ) { //Segundo Quadrante
+
+        f->xSize = abs(f->xSize) > f->ySize ? f->xSize : -f->ySize;
+        f->ySize = -f->xSize;
+
+    } else if ( f->xSize > 0 && f->ySize < 0 ) {
+        f->xSize = f->xSize > abs(f->ySize) ? f->xSize : -f->ySize;
+        f->ySize = -f->xSize;
+    } else
+    {
+        f->xSize = fmaxf(f->xSize, f->ySize);
+        f->ySize = f->xSize;
+    }
 }
 
 void setBackgroundColor(Form f, float r, float g, float b) {
@@ -131,8 +160,17 @@ void changeSecondPoint(Form f, float x, float y)
 }
 
 void recalculate(Form f, float x, float y) {
-    recalculatingPoints((&f->x), (&f->y), &x, &y);
+    //recalculatingPoints((&f->x), (&f->y), &x, &y);
     changeSecondPoint(f, x, y);
+
+    switch (f->type)
+    {
+        case SQUARE:
+        case CIRCLE:
+            formatSize(f);
+            break;
+
+    }
 }
 
 void getBGColor(Form f, float* c) {
@@ -166,7 +204,11 @@ void printfForm(Form f) {
 }
 
 int pickForm(Form f, float x, float y) {
-    return (x <= f->x + f->xSize && x >= f->x && y <= f->y + f->ySize && y >= f->y);
+    return (x <= f->x + f->xSize && x >= f->x && y <= f->y + f->ySize && y >= f->y) || //Primeiro quadrante
+        ( x >= f->x + f->xSize && x <= f->x && y <= f->y + f->ySize && y >= f->y) || //Segundo quadrante
+        ( x >= f->x + f->xSize && x <= f->x && y >= f->y + f->ySize && y <= f->y) || //Terceiro quadrante
+        ( x <= f->x + f->xSize && x >= f->x && y >= f->y + f->ySize && y <= f->y); //Quarto quadrante
+    ;
 }
 
 Form createRandomFigure(int x, int y, int maxSize) {
@@ -274,7 +316,7 @@ void drawTriangle(Form f) {
 void drawCircle(Form f, float radius, float faces) {
 
     float centerX = f->x + (f->xSize / 2);
-    float centerY = f->y + (f->xSize / 2);
+    float centerY = f->y + (f->ySize / 2);
 
     float step = (2 * PI) / faces;
 
@@ -312,6 +354,29 @@ void drawTriangleEq(Form f) {
 
 }
 
+void drawStar(Form f) {
+
+    float radius = f->xSize / 2;
+    float faces = 5;
+    float centerX = f->x + (f->xSize / 2);
+    float centerY = f->y + (f->ySize / 2);
+
+    float step = (2 * PI) / faces;
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_POLYGON);
+    for (float i = 0; i < 2*PI; i += step) {
+        float x = centerX + radius * cos(i);
+        float y = centerY + radius * sin(i);
+
+        glVertex2f(x, y);
+    }
+    glEnd();
+
+
+}
+
+
 
 void drawForm(Form f) {
 
@@ -333,6 +398,10 @@ void drawForm(Form f) {
         break;
     case TRIANGLE_EQ:
         drawTriangleEq(f);
+        break;
+    case STAR:
+        drawStar(f);
+        break;
     }
 }
 
