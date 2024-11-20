@@ -18,6 +18,7 @@ int windowHeight = 500;
 
 // state variable
 int type = SQUARE;
+int actualState = MODE_INSERT;
 float rState = 1.0;
 float gState = 1.0;
 float bState = 1.0;
@@ -131,42 +132,59 @@ void mykey(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
+
+void insertModeCanvas(int x, int y) {
+    // if (type == RECTANGLE) {
+    if (creatingForm) {
+        recalculate(selectedForm, x, y);
+        creatingForm = 0;
+        selectedForm = NULL;
+        glutPostRedisplay();
+    }
+    else {
+        //First click
+        if (type == CIRCLE) {
+            selectedForm = newCircle2Point(x, y, x, y);
+        } else {
+            selectedForm = newForm2Point(x, y, x, y, type);
+        }
+
+        setBackgroundColor(selectedForm, rState, gState, bState);
+
+        if (!insertDBForm(selectedForm)) {
+            printf("MEMORY FULL!!\n");
+            deleteForm(selectedForm);
+            selectedForm = NULL;
+        } else {
+            creatingForm = 1;
+            glutPostRedisplay();
+        }
+    }
+}
+
+void deleteModeCanvas(int x, int y) {
+    deleteScreenForm(x, y);
+
+}
+
 void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         printf("LEFT BUTTON PRESSED\n");
-        // if (type == RECTANGLE) {
-            if (creatingForm) {
-                recalculate(selectedForm, x, y);
-                creatingForm = 0;
-                selectedForm = NULL;
-                glutPostRedisplay();
-            }
-            else {
-                //First click
-                if (type == CIRCLE) {
-                    selectedForm = newCircle2Point(x, y, x, y);
-                } else {
-                    selectedForm = newForm2Point(x, y, x, y, type);
-                }
+        switch (actualState) {
+            case MODE_INSERT:
+                insertModeCanvas(x, y);
+            break;
+            case MODE_DELETE:
+                deleteModeCanvas(x, y);
+            break;
 
-                setBackgroundColor(selectedForm, rState, gState, bState);
-
-                if (!insertDBForm(selectedForm)) {
-                    printf("MEMORY FULL!!\n");
-                    deleteForm(selectedForm);
-                    selectedForm = NULL;
-                } else {
-                    creatingForm = 1;
-                    glutPostRedisplay();
-                }
-            }
-
+        }
     }
-    else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+    /*else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
         //printf("Click with the right button (X, Y) (%d, %d)\n", x, y);
         printf("RIGHT BUTTON PRESSED\n");
         deleteScreenForm(x, y);
-    }
+    }*/
 }
 
 void mouseMotion(int x, int y) {
@@ -212,8 +230,7 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 setBackgroundColor(activeColor, rState, gState, bState);
                 break;
             case REGION_MODE:
-                printf("REGION MODE");
-                pickChangeMode(activeColor, x, y);
+                pickChangeMode(&actualState, x, y);
                 break;
             default:
                 printf("Resto\n");
