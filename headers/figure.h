@@ -7,6 +7,7 @@
 #define HEXAGON 3
 #define CIRCLE 4
 #define TRIANGLE_EQ 5
+#define STAR 6
 
 typedef struct form* Form;
 

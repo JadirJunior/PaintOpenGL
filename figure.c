@@ -105,10 +105,14 @@ Form newHexagonC(float x, float y, float xSize, float ySize) {
     return newFormC(x, y, xSize, ySize, HEXAGON);
 }
 
+Form newStar(float x, float y, float xSize, float ySize) {
+    return newForm(x, y, xSize, ySize, STAR);
+}
+
+
 Form newCircle(float x, float y, float radius) {
     return newForm(x, y, radius, radius, CIRCLE);
 }
-
 
 Form newCircleC(float x, float y, float radius) {
     return newFormC(x, y, radius, radius, CIRCLE);
@@ -350,6 +354,29 @@ void drawTriangleEq(Form f) {
 
 }
 
+void drawStar(Form f) {
+
+    float radius = f->xSize / 2;
+    float faces = 5;
+    float centerX = f->x + (f->xSize / 2);
+    float centerY = f->y + (f->ySize / 2);
+
+    float step = (2 * PI) / faces;
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_POLYGON);
+    for (float i = 0; i < 2*PI; i += step) {
+        float x = centerX + radius * cos(i);
+        float y = centerY + radius * sin(i);
+
+        glVertex2f(x, y);
+    }
+    glEnd();
+
+
+}
+
+
 
 void drawForm(Form f) {
 
@@ -371,6 +398,10 @@ void drawForm(Form f) {
         break;
     case TRIANGLE_EQ:
         drawTriangleEq(f);
+        break;
+    case STAR:
+        drawStar(f);
+        break;
     }
 }
 
