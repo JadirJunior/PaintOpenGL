@@ -100,6 +100,14 @@ void drawAllForms() {
     }
 }
 
+void deleteAllForms() {
+    for (int i = 0; i < N; i++) {
+        //free(figuras);
+        figuras[i] = NULL;
+
+    }
+}
+
 void printForms() {
     for (int i = 0; i < N; i++) {
         if (figuras[i] != NULL) {
