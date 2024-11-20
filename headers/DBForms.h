@@ -10,4 +10,5 @@ int insertDBForm(Form f);
 void printForms();
 Form pick(float x, float y);
 int deleteFormDBForms(Form f);
+void deleteAllForms();
 #endif
