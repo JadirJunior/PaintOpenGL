@@ -9,6 +9,13 @@
 #define TRIANGLE_EQ 5
 #define STAR 6
 
+//Defining modes
+#define MODE_INSERT 11
+#define MODE_DELETE 12
+#define MODE_MOVE 13
+#define MODE_RESIZE 14
+#define MODE_CLEAR_SCREEN 15
+
 typedef struct form* Form;
 
 struct form {
@@ -51,4 +58,13 @@ void updateForm(Form f, float dx, float dy);
 void printfForm(Form f);
 void drawForm(Form f);
 void setBackgroundColor(Form f, float r, float g, float b);
+
+Form newInsertMode(float x, float y, float side);
+Form newDeleteMode(float x, float y, float side);
+Form newResizeMode(float x, float y, float side);
+Form newCleanScreenMode(float x, float y, float side);
+Form newMoveMode(float x, float y, float side);
+
+
+
 #endif
