@@ -393,6 +393,33 @@ void drawStar(Form f) {
 
 }
 
+void drawInsert(Form f) {
+    float xCenter = f->x + (f->xSize / 2);
+    float yCenter = f->y + (f->ySize / 2);
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_LINES);
+    glVertex2f(xCenter, yCenter - f->ySize/2);
+    glVertex2f(xCenter, yCenter + f->ySize/2);
+    glVertex2f(xCenter - f->xSize/2, yCenter);
+    glVertex2f(xCenter + f->xSize/2, yCenter); // Diagonal 2
+    glEnd();
+}
+
+void drawX(Form f) {
+
+    float xCenter = f->x + (f->xSize / 2);
+    float yCenter = f->y + (f->ySize / 2);
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_LINES);
+    glVertex2f(xCenter - f->xSize/2, yCenter - f->ySize/2);
+    glVertex2f(xCenter + f->xSize/2, yCenter + f->ySize/2); // Diagonal 1
+    glVertex2f(xCenter - f->xSize/2, yCenter + f->ySize/2);
+    glVertex2f(xCenter + f->xSize/2, yCenter - f->ySize/2); // Diagonal 2
+    glEnd();
+}
+
 void drawIconDraw() {
 
 }
@@ -424,10 +451,10 @@ void drawForm(Form f) {
         drawStar(f);
         break;
     case MODE_INSERT:
-        drawRectangle(f);
+        drawInsert(f);
         break;
     case MODE_DELETE:
-        drawTriangle(f);
+        drawX(f);
         break;
     case MODE_MOVE:
         drawRectangle(f);
