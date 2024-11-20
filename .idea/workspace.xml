@@ -29,13 +29,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9477f66-b1e4-4bdc-a5d1-d8202bab7f7a" name="Changes" comment="add: screenHandle.h to can build the project">
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/headers/toolbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/headers/toolbar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toolbar.c" beforeDir="false" afterPath="$PROJECT_DIR$/toolbar.c" afterDir="false" />
-    </list>
+    <list default="true" id="b9477f66-b1e4-4bdc-a5d1-d8202bab7f7a" name="Changes" comment="add: screenHandle.h to can build the project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +54,13 @@
     "accountId": "74277e34-8339-4d2f-be58-11cd88313a25"
   }
 }]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/DBForms.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/figure.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/headers/figure.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/main.c" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/toolbar.c" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2024" />
@@ -75,27 +76,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;CMake Application.PaintOpenGL.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "CMake Application.PaintOpenGL.executor": "Run",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging master",
+    "last_opened_file_path": "C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "CPPToolchains",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projetos\PaintOpenGL" />
@@ -132,7 +133,7 @@
       <workItem from="1731674032556" duration="2034000" />
       <workItem from="1731794862468" duration="132000" />
       <workItem from="1732039381588" duration="8000" />
-      <workItem from="1732114411831" duration="1986000" />
+      <workItem from="1732114411831" duration="2292000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Configuring the environment">
       <option name="closed" value="true" />
