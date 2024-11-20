@@ -173,26 +173,27 @@ void setMode()
     //mover
 
     modes = malloc(sizeof(Form) * nModes);
+    float r=1.0,g=1.0,b=1.0;
 
-        // Modo inserir
-    modes[0] = newSquare(xStartMode, ySize / 2 - 10, 20);
-    setBackgroundColor(modes[0], 0.2, 0.8, 0.2); // Cor verde para representar inserir
+    // Modo inserir
+    modes[0] = newInsertMode(xStartMode, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[0], 0, 1, 0); // Cor verde para representar inserir
 
     // Modo apagar
-    modes[1] = newSquare(xStartMode + 30, ySize / 2 - 10, 20);
-    setBackgroundColor(modes[1], 0.8, 0.2, 0.2); // Cor vermelha para apagar
+    modes[1] = newDeleteMode(xStartMode + 30, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[1], r, g, b); // Cor vermelha para apagar
 
     // Modo redimensionar
-    modes[2] = newSquare(xStartMode + 60, ySize / 2 - 10, 20);
-    setBackgroundColor(modes[2], 0.2, 0.2, 0.8); // Cor azul para redimensionar
+    modes[2] = newResizeMode(xStartMode + 60, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[2], r, g, b); // Cor azul para redimensionar
 
     // Modo limpar tela
-    modes[3] = newSquare(xStartMode + 90, ySize / 2 - 10, 20);
-    setBackgroundColor(modes[3], 0.8, 0.8, 0.2); // Cor amarela para limpar tela
+    modes[3] = newCleanScreenMode(xStartMode + 90, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[3], r, g, b); // Cor amarela para limpar tela
 
     // Modo mover
-    modes[4] = newSquare(xStartMode + 120, ySize / 2 - 10, 20);
-    setBackgroundColor(modes[4], 0.8, 0.5, 0.2); // Cor laranja para mover
+    modes[4] = newMoveMode(xStartMode + 120, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[4], r, g, b); // Cor laranja para mover
 
 }
 
@@ -250,18 +251,23 @@ void pickChangeForm(Form actualForm, float x, float y)
 }
 
 
-void pickChangeMode(Form actualForm, float x, float y) {
+void pickChangeMode(int *actualMode, float x, float y) {
     Form f = NULL;
     for (int i = 0; i < nModes;i++) {
-        if (modes[i] != NULL && pickForm(modes[i], x, y)) {
-            f = modes[i];
-            break;
+        if(modes[i] != NULL) {
+            setBackgroundColor(modes[i], 1,1,1);
+
+            if (pickForm(modes[i], x, y)) {
+                f = modes[i];
+            }
         }
+
     }
 
     if (f == NULL) return;
 
-    setBackgroundColor(actualForm, f->r, f->g, f->b);
+    *actualMode = f->type;
+    setBackgroundColor(f, 0, 1,0);
 }
 
 
