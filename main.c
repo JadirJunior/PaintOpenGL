@@ -167,6 +167,17 @@ void deleteModeCanvas(int x, int y) {
 
 }
 
+void clearScreenCanvas() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    //glFlush();
+    glutSwapBuffers();
+    //free em todas as formas
+    deleteAllForms();
+    glutPostRedisplay();
+
+
+}
+
 void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         printf("LEFT BUTTON PRESSED\n");
@@ -176,6 +187,10 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
             break;
             case MODE_DELETE:
                 deleteModeCanvas(x, y);
+            case MODE_CLEAR_SCREEN:
+                //free em todas as figuras que tem e atualiza a tela
+                clearScreenCanvas();
+
             break;
 
         }
