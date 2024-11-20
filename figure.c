@@ -151,6 +151,23 @@ void setBackgroundColor(Form f, float r, float g, float b) {
     f->b = b;
 }
 
+Form newInsertMode(float x, float y, float side) {
+    return newForm(x, y, side, side, MODE_INSERT);
+}
+
+Form newDeleteMode(float x, float y, float side) {
+    return newForm(x, y, side, side, MODE_DELETE);
+}
+Form newResizeMode(float x, float y, float side) {
+    return newForm(x, y, side, side, MODE_RESIZE);
+}
+Form newCleanScreenMode(float x, float y, float side) {
+    return newForm(x, y, side, side, MODE_CLEAR_SCREEN);
+
+}
+Form newMoveMode(float x, float y, float side) {
+    return newForm(x, y, side, side, MODE_MOVE);
+}
 
 
 void changeSecondPoint(Form f, float x, float y)
@@ -376,6 +393,10 @@ void drawStar(Form f) {
 
 }
 
+void drawIconDraw() {
+
+}
+
 
 
 void drawForm(Form f) {
@@ -401,6 +422,21 @@ void drawForm(Form f) {
         break;
     case STAR:
         drawStar(f);
+        break;
+    case MODE_INSERT:
+        drawRectangle(f);
+        break;
+    case MODE_DELETE:
+        drawTriangle(f);
+        break;
+    case MODE_MOVE:
+        drawRectangle(f);
+        break;
+    case MODE_RESIZE:
+        drawTriangle(f);
+        break;
+    case MODE_CLEAR_SCREEN:
+        drawRectangle(f);
         break;
     }
 }
