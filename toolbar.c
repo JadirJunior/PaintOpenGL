@@ -18,6 +18,10 @@ int nPalettes = 5;
 Form* forms;
 int nForms = 4;
 
+//Formas para alterar o modo
+Form* modes;
+int nModes = 5;
+
 //Tamanho da toolbar
 float ySize = 40;
 float xSize = 500;
@@ -60,7 +64,14 @@ void resize(float newWidth, float newHeight) {
     for (int i = 0; i < nForms; i++) {
         if (forms[i] != NULL)
         {
-            forms[i]->x = xStartForms + 10 + ( 30*i );
+            forms[i]->x = xStartForms + 10 + ( 30.0*i );
+        }
+    }
+
+    for (int i = 0; i < nModes; i++) {
+        if (modes[i] != NULL)
+        {
+            modes[i]->x = xStartMode + 10 + ( 30.0*i );
         }
     }
 
@@ -110,6 +121,12 @@ void drawToolBar() {
         }
     }
 
+    for(int i = 0; i < nModes; i++) {
+        if(modes[i] != NULL) {
+            drawForm(modes[i]);
+        }
+    }
+
 }
 
 void setPalettes()
@@ -145,10 +162,41 @@ void setForms()
     forms[3] = newHexagon(xStartForms + 90, ySize/2 - 10, 20, 20);
 }
 
+
+
 void setMode()
 {
+    //inserir
+    //apagar
+    //redimensionar
+    //limpar tela
+    //mover
+
+    modes = malloc(sizeof(Form) * nModes);
+
+        // Modo inserir
+    modes[0] = newSquare(xStartMode, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[0], 0.2, 0.8, 0.2); // Cor verde para representar inserir
+
+    // Modo apagar
+    modes[1] = newSquare(xStartMode + 30, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[1], 0.8, 0.2, 0.2); // Cor vermelha para apagar
+
+    // Modo redimensionar
+    modes[2] = newSquare(xStartMode + 60, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[2], 0.2, 0.2, 0.8); // Cor azul para redimensionar
+
+    // Modo limpar tela
+    modes[3] = newSquare(xStartMode + 90, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[3], 0.8, 0.8, 0.2); // Cor amarela para limpar tela
+
+    // Modo mover
+    modes[4] = newSquare(xStartMode + 120, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[4], 0.8, 0.5, 0.2); // Cor laranja para mover
 
 }
+
+
 
 void createToolBar(Form actualForm, const float toolBarX, const float toolBarY) {
     xSize = toolBarX;
@@ -195,6 +243,22 @@ void pickChangeForm(Form actualForm, float x, float y)
 
     actualForm->type = f->type;
 }
+
+
+void pickChangeMode(Form actualForm, float x, float y) {
+    Form f = NULL;
+    for (int i = 0; i < nModes;i++) {
+        if (modes[i] != NULL && pickForm(modes[i], x, y)) {
+            f = modes[i];
+            break;
+        }
+    }
+
+    if (f == NULL) return;
+
+    setBackgroundColor(actualForm, f->r, f->g, f->b);
+}
+
 
 
 int pickRegion(const float x, float y) {

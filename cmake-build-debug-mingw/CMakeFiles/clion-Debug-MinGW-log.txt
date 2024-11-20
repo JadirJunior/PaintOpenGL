@@ -1,0 +1,4 @@
+"C:\Program Files\JetBrains\CLion 2024.2.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "MinGW Makefiles" -S "C:\Users\ze\Desktop\FACULDADe\ESTGD - PORTUGAL\Computacao Grafica\projetos\PaintOpenGL" -B "C:\Users\ze\Desktop\FACULDADe\ESTGD - PORTUGAL\Computacao Grafica\projetos\PaintOpenGL\cmake-build-debug-mingw"
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: C:/Users/ze/Desktop/FACULDADe/ESTGD - PORTUGAL/Computacao Grafica/projetos/PaintOpenGL/cmake-build-debug-mingw

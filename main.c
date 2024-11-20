@@ -210,6 +210,10 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 type = activeColor->type;
                 setBackgroundColor(activeColor, rState, gState, bState);
                 break;
+            case REGION_MODE:
+                printf("REGION MODE");
+                pickChangeMode(activeColor, x, y);
+                break;
             default:
                 printf("Resto\n");
                 break;

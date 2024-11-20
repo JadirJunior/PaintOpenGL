@@ -29,8 +29,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9477f66-b1e4-4bdc-a5d1-d8202bab7f7a" name="Changes" comment="feat: fixed activeColor position, optimized flush and changeForms tool">
+    <list default="true" id="b9477f66-b1e4-4bdc-a5d1-d8202bab7f7a" name="Changes" comment="add: screenHandle.h to can build the project">
+      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/headers/toolbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/headers/toolbar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/toolbar.c" beforeDir="false" afterPath="$PROJECT_DIR$/toolbar.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,12 +54,12 @@
     &quot;assignee&quot;: &quot;cenciW&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/JadirJunior/PaintOpenGL.git&quot;,
-    &quot;accountId&quot;: &quot;1d0d38b5-bc6f-4130-b171-cbb633d5313d&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/JadirJunior/PaintOpenGL.git",
+    "accountId": "74277e34-8339-4d2f-be58-11cd88313a25"
   }
-}</component>
+}]]></component>
   <component name="ProjectApplicationVersion">
     <option name="ide" value="CLion" />
     <option name="majorVersion" value="2024" />
@@ -128,6 +132,7 @@
       <workItem from="1731674032556" duration="2034000" />
       <workItem from="1731794862468" duration="132000" />
       <workItem from="1732039381588" duration="8000" />
+      <workItem from="1732114411831" duration="1986000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Configuring the environment">
       <option name="closed" value="true" />

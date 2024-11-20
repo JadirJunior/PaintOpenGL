@@ -19,6 +19,13 @@
 #define REGION_FORMS 2
 #define REGION_MODE 3
 
+//Defining modes
+#define MODE_INSERT 0
+#define MODE_DELETE 1
+#define MODE_MOVE 2
+#define MODE_RESIZE 3
+//#define MODE_CLEAR 4
+
 
 //Defining ToolBar percentual sections
 // #define TOOLBAR_ACTIVE 0.1f
