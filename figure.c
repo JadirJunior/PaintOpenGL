@@ -420,9 +420,89 @@ void drawX(Form f) {
     glEnd();
 }
 
-void drawIconDraw() {
+void drawIconMove(Form f) {
+    float xCenter = f->x + (f->xSize / 2);
+    float yCenter = f->y + (f->ySize / 2);
+
+    float arrowLength = f->xSize / 2; // Comprimento das linhas principais
+    float arrowHeadSize = fmin(f->xSize, f->ySize) / 4; // Tamanho das pontas das setas
+
+    glColor3f(f->r, f->g, f->b);
+
+    // Linhas principais
+    glBegin(GL_LINES);
+    // Linha horizontal
+    glVertex2f(xCenter - arrowLength, yCenter);
+    glVertex2f(xCenter + arrowLength, yCenter);
+
+    // Linha vertical
+    glVertex2f(xCenter, yCenter - arrowLength);
+    glVertex2f(xCenter, yCenter + arrowLength);
+    glEnd();
+
+    // Triângulos para as setas
+    glBegin(GL_TRIANGLES);
+    // Seta esquerda
+    glVertex2f(xCenter - arrowLength, yCenter);
+    glVertex2f(xCenter - arrowLength + arrowHeadSize / 2, yCenter + arrowHeadSize / 2);
+    glVertex2f(xCenter - arrowLength + arrowHeadSize / 2, yCenter - arrowHeadSize / 2);
+
+    // Seta direita
+    glVertex2f(xCenter + arrowLength, yCenter);
+    glVertex2f(xCenter + arrowLength - arrowHeadSize / 2, yCenter + arrowHeadSize / 2);
+    glVertex2f(xCenter + arrowLength - arrowHeadSize / 2, yCenter - arrowHeadSize / 2);
+
+    // Seta superior
+    glVertex2f(xCenter, yCenter + arrowLength);
+    glVertex2f(xCenter - arrowHeadSize / 2, yCenter + arrowLength - arrowHeadSize / 2);
+    glVertex2f(xCenter + arrowHeadSize / 2, yCenter + arrowLength - arrowHeadSize / 2);
+
+    // Seta inferior
+    glVertex2f(xCenter, yCenter - arrowLength);
+    glVertex2f(xCenter - arrowHeadSize / 2, yCenter - arrowLength + arrowHeadSize / 2);
+    glVertex2f(xCenter + arrowHeadSize / 2, yCenter - arrowLength + arrowHeadSize / 2);
+    glEnd();
+}
+
+void drawIconResize(Form f) {
+    float xCenter = f->x + (f->xSize / 2);
+    float yCenter = f->y + (f->ySize / 2);
+
+    float arrowHeadSize = fmin(f->xSize, f->ySize) / 4;
+
+    glColor3f(f->r, f->g, f->b);
+
+    // Desenha a linha diagonal
+    glBegin(GL_LINES);
+    glVertex2f(xCenter - f->xSize / 2, yCenter - f->ySize / 2);
+    glVertex2f(xCenter + f->xSize / 2, yCenter + f->ySize / 2);
+    glEnd();
+
+    // Desenha as setas
+    glBegin(GL_TRIANGLES);
+    // Seta inferior esquerda
+    glVertex2f(xCenter - f->xSize / 2, yCenter - f->ySize / 2);
+    glVertex2f(xCenter - f->xSize / 2 + arrowHeadSize, yCenter - f->ySize / 2);
+    glVertex2f(xCenter - f->xSize / 2, yCenter - f->ySize / 2 + arrowHeadSize);
+
+    // Seta superior direita
+    glVertex2f(xCenter + f->xSize / 2, yCenter + f->ySize / 2);
+    glVertex2f(xCenter + f->xSize / 2 - arrowHeadSize, yCenter + f->ySize / 2);
+    glVertex2f(xCenter + f->xSize / 2, yCenter + f->ySize / 2 - arrowHeadSize);
+    glEnd();
 
 }
+
+void drawClearScreenIcon(Form f) {
+    //validar se a tela ta limpa ou nao deixar verde(nao tem nada para limpar) ou vermelho(tem coisa para limpar)
+
+
+    drawRectangle(f);
+    setBackgroundColor(f, 1, 0, 0);
+    drawX(f);
+
+}
+
 
 
 
@@ -457,13 +537,13 @@ void drawForm(Form f) {
         drawX(f);
         break;
     case MODE_MOVE:
-        drawRectangle(f);
+        drawIconMove(f);
         break;
     case MODE_RESIZE:
-        drawTriangle(f);
+        drawIconResize(f);
         break;
     case MODE_CLEAR_SCREEN:
-        drawRectangle(f);
+        drawClearScreenIcon(f);
         break;
     }
 }
