@@ -13,8 +13,8 @@
 #define FREEGLUT_LIB_PRAGMAS 0
 
 int cont;
-int windowWidth = 500;
-int windowHeight = 500;
+int windowWidth = 700;
+int windowHeight = 700;
 
 // state variable
 int type = SQUARE;
@@ -272,9 +272,12 @@ void reShape(int width, int height) {
 }
 
 void setupOpenGL() {
+    int screenWidth = glutGet(GLUT_SCREEN_WIDTH);   // Largura da tela
+    int screenHeight = glutGet(GLUT_SCREEN_HEIGHT); // Altura da tela
+
     glutInitDisplayMode(GLUT_SINGLE);
     glutInitWindowSize(windowWidth, windowHeight);
-    glutInitWindowPosition(0, 0);
+    glutInitWindowPosition((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2);
     glutCreateWindow("Janela para figuras");
     init(windowWidth, windowHeight);
     glutDisplayFunc(displayForms);
