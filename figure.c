@@ -176,6 +176,11 @@ void changeSecondPoint(Form f, float x, float y)
     f->ySize = y - f->y;
 }
 
+void changeFormPosition(Form f, float x, float y) {
+    f->x = x - f->xSize / 2;
+    f->y = y - f->ySize / 2;
+}
+
 void recalculate(Form f, float x, float y) {
     //recalculatingPoints((&f->x), (&f->y), &x, &y);
     changeSecondPoint(f, x, y);
@@ -300,7 +305,6 @@ void drawRectangle(Form f) {
         glVertex2f(f->x + f->xSize, f->y);
     glEnd();
 
-    //glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
     glColor3f(1.0, 1.0, 1.0);
     glBegin(GL_LINE_LOOP);
         glVertex2f(f->x, f->y);
@@ -373,8 +377,8 @@ void drawTriangleEq(Form f) {
 
 void drawStar(Form f) {
 
-    float radius = f->xSize / 2;
-    float faces = 5;
+    float radius = f->xSize / 4;
+    float faces = 7;
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
 
@@ -382,7 +386,7 @@ void drawStar(Form f) {
 
     glColor3f(f->r, f->g, f->b);
     glBegin(GL_POLYGON);
-    for (float i = 0; i < 2*PI; i += step) {
+    for (float i = PI/12; i < 2*PI; i += step) {
         float x = centerX + radius * cos(i);
         float y = centerY + radius * sin(i);
 
@@ -390,6 +394,22 @@ void drawStar(Form f) {
     }
     glEnd();
 
+    glBegin(GL_TRIANGLES);
+    for (float i = PI / 12; i < 2 * PI; i += step) {
+        float x = centerX + radius * cos(i);
+        float y = centerY + radius * sin(i);
+
+        glVertex2f(x, y);
+
+        glVertex2f(x + radius*cos(i + step), y + radius*sin(i + step));
+
+
+        float x2 = centerX + radius * cos(i + step);
+        float y2 = centerY + radius * sin(i + step);
+
+        glVertex2f(x2, y2);
+    }
+    glEnd();
 
 }
 

@@ -43,6 +43,7 @@ Form newTriangleEqC(float x, float y, float side);
 Form newRectangle2Point(float xi, float yi, float xf, float yf);
 Form newForm2Point(float xi, float yi, float xf, float yf, int type);
 Form newCircle2Point(float xi, float yi, float xf, float yf);
+Form newStar(float x, float y, float xSize, float ySize);
 
 //Check if XY is inside form
 int pickForm(Form f, float x, float y);
@@ -58,6 +59,7 @@ void updateForm(Form f, float dx, float dy);
 void printfForm(Form f);
 void drawForm(Form f);
 void setBackgroundColor(Form f, float r, float g, float b);
+void changeFormPosition(Form f, float x, float y);
 
 Form newInsertMode(float x, float y, float side);
 Form newDeleteMode(float x, float y, float side);

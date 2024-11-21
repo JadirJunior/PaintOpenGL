@@ -94,7 +94,6 @@ void generateRandomFigures(int maxSize) {
 void drawAllForms() {
     for (int i = 0; i < N; i++) {
         if (figuras[i] != NULL) {
-            printf("Menor Ponto (X, Y): (%f, %f) | Maior Ponto (X, Y): (%f, %f)\n", figuras[i]->x, figuras[i]->y, figuras[i]->x + figuras[i]->xSize, figuras[i]->y + figuras[i]->ySize);
             drawForm(figuras[i]);
         }
     }
