@@ -16,7 +16,7 @@ int nPalettes = 5;
 
 //Formas para alterar a forma atual
 Form* forms;
-int nForms = 4;
+int nForms = 5;
 
 //Formas para alterar o modo
 Form* modes;
@@ -160,6 +160,7 @@ void setForms()
     forms[1] = newCircle(xStartForms + 30, ySize/2 - 10, 20);
     forms[2] = newTriangleEq(xStartForms + 60, ySize/2 - 10, 20);
     forms[3] = newHexagon(xStartForms + 90, ySize/2 - 10, 20, 20);
+    forms[4] = newStar(xStartForms + 120, ySize/2 - 10, 20, 20);
 }
 
 
