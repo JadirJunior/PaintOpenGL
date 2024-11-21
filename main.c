@@ -25,6 +25,8 @@ float bState = 1.0;
 float deltaColor = 0.1;
 
 int creatingForm = 0;
+int moving = 0;
+int resizing = 0;
 
 Form selectedForm = NULL;
 
@@ -46,7 +48,6 @@ void displayForms() {
     printf("Contador: %d\n", cont);
 
     drawForm(activeColor);
-    printf("Active Color (X, Y): %f, %f\n", activeColor->x, activeColor->y);
 
     drawAllForms();
     drawToolBar();
@@ -77,61 +78,14 @@ void deleteScreenForm(int x, int y) {
     }
 }
 
-void mykey(unsigned char key, int x, int y)
+void resetStates()
 {
-    if (key == 'Q' | key == 'q')
-        exit(0);
-
-    // switch (key) {
-    //     case 'r':
-    //     case 'R':
-    //         type = RECTANGLE; break;
-    //     case 't':
-    //     case 'T':
-    //         type = TRIANGLE_ISO; break;
-    //     case 's':
-    //     case 'S':
-    //         type = SQUARE; break;
-    //     case '1':
-    //         rState += deltaColor;
-    //         if (rState > 1.0) rState = 1.0;
-    //         break;
-    //     case '2':
-    //         gState += deltaColor;
-    //         if (gState > 1.0) gState = 1.0;
-    //         break;
-    //     case '3':
-    //         bState += deltaColor;
-    //         if (bState > 1.0) bState = 1.0;
-    //         break;
-    //
-    //     case '4':
-    //         rState -= deltaColor;
-    //         if (rState < 0.0) rState = 0.0;
-    //         break;
-    //     case '5':
-    //         gState -= deltaColor;
-    //         if (gState < 0.0) gState = 0.0;
-    //         break;
-    //     case '6':
-    //         bState -= deltaColor;
-    //         if (bState < 0.0) bState = 0.0;
-    //         break;
-    //
-    //     case 'i':
-    //     case 'I':
-    //         insertForm(x, y);
-    //         break;
-    //
-    //     case 'd':
-    //     case 'D':
-    //         deleteScreenForm(x, y);
-    //
-    // }
-    //setBackgroundColor(activeColor, rState, gState, bState);
-    glutPostRedisplay();
+    if (selectedForm != NULL && creatingForm == 1) {
+        printf("Entrou aqui 2\n");
+        deleteFormDBForms(selectedForm);
+        creatingForm = 0;
+    }
 }
-
 
 void insertModeCanvas(int x, int y) {
     // if (type == RECTANGLE) {
@@ -174,38 +128,72 @@ void clearScreenCanvas() {
     //free em todas as formas
     deleteAllForms();
     glutPostRedisplay();
+}
 
+void moveModeCanvas(float x, float y) {
 
+    if (moving == 0) {
+        selectedForm = pick(x, y);
+
+        if (selectedForm != NULL)
+        {
+            moving = 1;
+        }
+    }
+}
+
+void resizeModeCanvas(float x, float y) {
+    if (resizing == 0 && selectedForm == NULL) {
+        selectedForm = pick(x, y);
+
+        if (selectedForm != NULL) {
+            resizing = 1;
+        }
+    } else if (resizing == 1) {
+        resizing = 0;
+        selectedForm = NULL;
+    }
 }
 
 void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+        printf("LEFT BUTTON RELEASED\n");
+        if (moving) {
+            moving = 0;
+            selectedForm = NULL;
+        }
+    }
+
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         printf("LEFT BUTTON PRESSED\n");
         switch (actualState) {
             case MODE_INSERT:
                 insertModeCanvas(x, y);
-            break;
+                break;
             case MODE_DELETE:
                 deleteModeCanvas(x, y);
+                break;
             case MODE_CLEAR_SCREEN:
                 //free em todas as figuras que tem e atualiza a tela
                 clearScreenCanvas();
-
-            break;
-
+                break;
+            case MODE_MOVE:
+                moveModeCanvas(x, y);
+                break;
+            case MODE_RESIZE:
+                resizeModeCanvas(x, y);
+                break;
         }
     }
-    /*else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-        //printf("Click with the right button (X, Y) (%d, %d)\n", x, y);
-        printf("RIGHT BUTTON PRESSED\n");
-        deleteScreenForm(x, y);
-    }*/
 }
 
 void mouseMotion(int x, int y) {
     y = windowHeight - y;
 
-    
+    if (moving) {
+        changeFormPosition(selectedForm, x, y);
+        glutPostRedisplay();
+    }
 
     //printf("Moving pressing some button... (%i, %i)\n", x, y);
 }
@@ -213,7 +201,7 @@ void mouseMotion(int x, int y) {
 void mousePassiveMotion(int x, int y) {
     y = windowHeight - y;
 
-    if (creatingForm) {
+    if (creatingForm || resizing) {
         changeSecondPoint(selectedForm, x, y);
         glutPostRedisplay();
     }
@@ -246,6 +234,8 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 break;
             case REGION_MODE:
                 pickChangeMode(&actualState, x, y);
+                resetStates();
+                if (actualState == MODE_CLEAR_SCREEN) deleteAllForms();
                 break;
             default:
                 printf("Resto\n");
@@ -283,7 +273,6 @@ void setupOpenGL() {
     glutDisplayFunc(displayForms);
     glutMouseFunc(mouseClick);
     glutReshapeFunc(reShape);
-    glutKeyboardFunc(mykey);
     glutPassiveMotionFunc(mousePassiveMotion);
     glutMotionFunc(mouseMotion);
     glutMainLoop();
