@@ -14,9 +14,6 @@ int actualPosition;
 
 int N;
 
-//teste alteracao pro git
-//teste alteração agora vai
-
 void initDBForms(int number) {
     N = number;
     figuras = malloc(sizeof(Form) * N);
@@ -56,39 +53,6 @@ void shiftToLeft(int posInitial, int *arr, int *size) {
     }
 
     (*size)--;
-}
-
-void removeRandomFigure() {
-
-    int pos, positions = 0;
-
-    if (actualPosition < 0) return;
-    else if (actualPosition == 0) pos = 0;
-    else {
-        positions = (rand() % actualPosition);
-        pos = positionFigures[positions];
-    }
-
-    deleteForm(figuras[pos]);
-    figuras[pos] = NULL;;
-
-    shiftToLeft(positions, positionFigures, &actualPosition);
-
-}
-
-void generateRandomFigures(int maxSize) {
-
-    for (int i = 0; i < N; i++) {
-        if (figuras[i] != NULL) {
-            deleteForm(figuras[i]);
-            figuras[i] = NULL;
-        }
-    }
-
-    for (int i = 0; i < N; i++) {
-        figuras[i] = createRandomFigure(rand() % maxSize, rand() % maxSize, maxSize);
-        setBackgroundColor(figuras[i], rand() / (RAND_MAX * 1.0), rand() / (RAND_MAX * 1.0), rand() / (RAND_MAX * 1.0));
-    }
 }
 
 void drawAllForms() {
