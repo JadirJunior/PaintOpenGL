@@ -23,8 +23,8 @@
 
 //Defining ToolBar percentual sections
 // #define TOOLBAR_ACTIVE 0.1f
-#define TOOLBAR_COLOR 0.35f
-#define TOOLBAR_FORMS 0.35f
+#define TOOLBAR_COLOR 0.25f
+#define TOOLBAR_FORMS 0.45f
 #define TOOLBAR_MODES 0.30f
 
 
@@ -35,6 +35,7 @@ void resize(float newWidth, float newHeight);
 void drawToolBar();
 void pickColor(Form actualForm, float x, float y);
 void pickChangeForm(Form actualForm, float x, float y);
+void pickChangeFormAndSize(Form actualForm, float x, float y);
 void pickChangeMode(int *actualMode, float x, float y);
 
 #endif

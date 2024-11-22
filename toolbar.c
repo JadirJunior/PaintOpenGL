@@ -16,7 +16,7 @@ int nPalettes = 5;
 
 //Formas para alterar a forma atual
 Form* forms;
-int nForms = 5;
+int nForms = 7;
 
 //Formas para alterar o modo
 Form* modes;
@@ -157,10 +157,12 @@ void setForms()
     forms = malloc(sizeof(Form) * nForms);
 
     forms[0] = newSquare(xStartForms, ySize/2 - 10, 20);
-    forms[1] = newCircle(xStartForms + 30, ySize/2 - 10, 20);
-    forms[2] = newTriangleEq(xStartForms + 60, ySize/2 - 10, 20);
-    forms[3] = newHexagon(xStartForms + 90, ySize/2 - 10, 20, 20);
-    forms[4] = newStar(xStartForms + 120, ySize/2 - 10, 20, 20);
+    forms[1] = newCircle(xStartForms + 40, ySize/2 - 10, 20);
+    forms[2] = newTriangleIso(xStartForms + 50, ySize/2 - 10, 20, 10);
+    forms[3] = newHexagon(xStartForms + 100, ySize/2 - 10, 20, 20);
+    forms[4] = newStar(xStartForms + 130, ySize/2 - 10, 20, 20);
+    forms[5] = newTriangleEq(xStartForms + 160, ySize/2 - 10, 20);
+    forms[6] = newRectangle(xStartForms + 190, ySize/2 - 10, 30, 20);
 }
 
 
@@ -246,9 +248,27 @@ void pickChangeForm(Form actualForm, float x, float y)
         }
     }
     if (f == NULL) return;
+    int type = f->type;
+    actualForm->type = type;
+}
+
+void pickChangeFormAndSize(Form actualForm, float x, float y) {
+    Form f = NULL;
+    for (int i = 0; i < nForms;i++)
+    {
+        if (forms[i] != NULL && pickForm(forms[i], x, y)) {
+            f = forms[i];
+            break;
+        }
+    }
+    if (f == NULL) return;
 
     int type = f->type;
     actualForm->type = type;
+    actualForm->xSize = f->xSize;
+    actualForm->ySize = f->ySize;
+    actualForm->x = actualForm->x + (actualForm->xSize - f->xSize) / 2;
+    actualForm->y = actualForm->y + (actualForm->ySize - f->ySize) / 2;
 }
 
 
@@ -274,9 +294,6 @@ void pickChangeMode(int *actualMode, float x, float y) {
 
 
 int pickRegion(const float x, float y) {
-
-    // printf("X clicado: %f\n", x);
-
     //Não está na toolbar
     if (y > ySize) return -1;
 
