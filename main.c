@@ -56,17 +56,6 @@ void displayForms() {
     glFlush();
 }
 
-void insertForm(int x, int y) {
-    Form f = createRandomFigure2(type, x, y, 200);
-    setBackgroundColor(f, rState, gState, bState);
-
-    if (!insertDBForm(f)) {
-        printf("Memory Full\n");
-        deleteForm(f);
-    }
-    else glutPostRedisplay();
-}
-
 void deleteScreenForm(int x, int y) {
     Form f = pick(x, y);
     if (f != NULL) {
@@ -82,14 +71,17 @@ void deleteScreenForm(int x, int y) {
 void resetStates()
 {
     if (selectedForm != NULL && creatingForm == 1) {
-        printf("Entrou aqui 2\n");
         deleteFormDBForms(selectedForm);
         creatingForm = 0;
+    } else if (selectedForm != NULL) {
+        selectedForm->boundingBox = 0;
+        selectedForm = NULL;
+        selected = 0;
+        moving = 0;
     }
 }
 
 void insertModeCanvas(int x, int y) {
-    // if (type == RECTANGLE) {
     if (creatingForm) {
         recalculate(selectedForm, x, y);
         creatingForm = 0;
@@ -123,7 +115,6 @@ void deleteModeCanvas(int x, int y) {
 
 void clearScreenCanvas() {
     glClear(GL_COLOR_BUFFER_BIT);
-    //glFlush();
     glutSwapBuffers();
     //free em todas as formas
     deleteAllForms();
@@ -139,6 +130,7 @@ void moveModeCanvas(float x, float y) {
         {
             moving = 1;
             selected= 1;
+            selectedForm->boundingBox = 1;
         }
     }
 }
@@ -201,8 +193,6 @@ void mouseMotion(int x, int y) {
         changeFormPosition(selectedForm, x, y);
         glutPostRedisplay();
     }
-
-    //printf("Moving pressing some button... (%i, %i)\n", x, y);
 }
 
 void mousePassiveMotion(int x, int y) {
@@ -212,8 +202,6 @@ void mousePassiveMotion(int x, int y) {
         changeSecondPoint(selectedForm, x, y);
         glutPostRedisplay();
     }
-
-    //printf("Moving... (%i, %i)\n", x, y);
 }
 
 void mouseClick(GLint button, GLint state, GLint x, GLint y) {
@@ -241,17 +229,24 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
             case REGION_FORMS:
                 if (selected==1 && selectedForm != NULL) {
                     pickChangeForm(selectedForm, x, y);
+
+                    switch (selectedForm->type) {
+                        case CIRCLE:
+                        case HEXAGON:
+                        case STAR:
+                        case SQUARE:
+                        case TRIANGLE_EQ:
+                            formatSize(selectedForm);
+                            break;
+                    }
                 } else {
-                    pickChangeForm(activeColor, x, y);
+                    pickChangeFormAndSize(activeColor, x, y);
                     type = activeColor->type;
                     setBackgroundColor(activeColor, rState, gState, bState);
                 }
                 break;
             case REGION_MODE:
-                if (selected == 1) {
-                    selected = 0;
-                    selectedForm = NULL;
-                }
+                resetStates();
                 pickChangeMode(&actualState, x, y);
                 resetStates();
                 if (actualState == MODE_CLEAR_SCREEN) deleteAllForms();
