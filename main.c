@@ -119,7 +119,6 @@ void insertModeCanvas(int x, int y) {
 
 void deleteModeCanvas(int x, int y) {
     deleteScreenForm(x, y);
-
 }
 
 void clearScreenCanvas() {
@@ -162,7 +161,9 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
         printf("LEFT BUTTON RELEASED\n");
         if (moving) {
             moving = 0;
-            selectedForm = NULL;
+            if (selected == 0) {
+                selectedForm == NULL;
+            }
         }
     }
 
@@ -170,12 +171,15 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
         printf("LEFT BUTTON PRESSED\n");
         switch (actualState) {
             case MODE_INSERT:
+                selected = 0;
                 insertModeCanvas(x, y);
                 break;
             case MODE_DELETE:
+                selected = 0;
                 deleteModeCanvas(x, y);
                 break;
             case MODE_CLEAR_SCREEN:
+                selected = 0;
                 //free em todas as figuras que tem e atualiza a tela
                 clearScreenCanvas();
                 break;
@@ -183,6 +187,7 @@ void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
                 moveModeCanvas(x, y);
                 break;
             case MODE_RESIZE:
+                selected = 0;
                 resizeModeCanvas(x, y);
                 break;
         }
@@ -224,19 +229,29 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 printf("Region active\n");
                 break;
             case REGION_COLOR:
-                if (selectedForm && moving) {
+                if (selectedForm != NULL && selected) {
+                    pickColor(selectedForm, x, y);
+                } else {
+                    pickColor(activeColor, x, y);
+                    rState = activeColor->r;
+                    gState = activeColor->g;
+                    bState = activeColor->b;
                 }
-                pickColor(activeColor, x, y);
-                rState = activeColor->r;
-                gState = activeColor->g;
-                bState = activeColor->b;
                 break;
             case REGION_FORMS:
-                pickChangeForm(activeColor, x, y);
-                type = activeColor->type;
-                setBackgroundColor(activeColor, rState, gState, bState);
+                if (selected==1 && selectedForm != NULL) {
+                    pickChangeForm(selectedForm, x, y);
+                } else {
+                    pickChangeForm(activeColor, x, y);
+                    type = activeColor->type;
+                    setBackgroundColor(activeColor, rState, gState, bState);
+                }
                 break;
             case REGION_MODE:
+                if (selected == 1) {
+                    selected = 0;
+                    selectedForm = NULL;
+                }
                 pickChangeMode(&actualState, x, y);
                 resetStates();
                 if (actualState == MODE_CLEAR_SCREEN) deleteAllForms();
