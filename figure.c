@@ -9,6 +9,16 @@
 #define FREEGLUT_LIB_PRAGMAS 0
 
 #define PI 3.1415
+//TODO: REFACTORS
+/*
+    validar o quadrado no resize
+    mudar quando tiver mostrando o desenho do quadrado
+    alterar cor
+    desenhar quadrado e retângulo
+    triangulo equilátero
+    trocar numero de faces da estrela
+    leve bug parece que a figura sobe
+ */
 
 
 void recalculatingPoints(float* xi, float* yi, float* xf, float* yf) {
@@ -378,7 +388,7 @@ void drawTriangleEq(Form f) {
 void drawStar(Form f) {
 
     float radius = f->xSize / 4;
-    float faces = 7;
+    float faces = 10;
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
 
