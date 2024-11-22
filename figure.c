@@ -11,8 +11,6 @@
 #define PI 3.1415
 //TODO: REFACTORS
 /*
-    validar o quadrado no resize
-    mudar quando tiver mostrando o desenho do quadrado
     alterar cor
     desenhar quadrado e retângulo
     triangulo equilátero
@@ -184,6 +182,7 @@ void changeSecondPoint(Form f, float x, float y)
 {
     f->xSize = x - f->x;
     f->ySize = y - f->y;
+    if (f->type == SQUARE) formatSize(f);
 }
 
 void changeFormPosition(Form f, float x, float y) {
