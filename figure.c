@@ -11,11 +11,7 @@
 #define PI 3.1415
 //TODO: REFACTORS
 /*
-    alterar cor
-    desenhar quadrado e retângulo
-    triangulo equilátero
     trocar numero de faces da estrela
-    leve bug parece que a figura sobe
  */
 
 
@@ -53,6 +49,8 @@ Form newForm(float x, float y, float xSize, float ySize, int type) {
     f->r = 1.0;
     f->g = 1.0;
     f->b = 1.0;
+
+    f->boundingBox = 0;
 
     f->type = type;
 
@@ -182,7 +180,7 @@ void changeSecondPoint(Form f, float x, float y)
 {
     f->xSize = x - f->x;
     f->ySize = y - f->y;
-    if (f->type == SQUARE) formatSize(f);
+    if (f->type == SQUARE || f->type == TRIANGLE_EQ || f->type == HEXAGON || f->type == CIRCLE || f->type == STAR) formatSize(f);
 }
 
 void changeFormPosition(Form f, float x, float y) {
@@ -214,11 +212,6 @@ void deleteForm(Form f) {
     free(f);
 }
 
-void updateForm(Form f, float dx, float dy) {
-    f->x += dx;
-    f->y += dy;
-}
-
 
 void printfForm(Form f) {
     printf("Graphical Form BBox: (%.2f,%.2f), (%.2f, %.2f), (%.2f, %.2f), (%.2f, %.2f)\t",
@@ -242,68 +235,6 @@ int pickForm(Form f, float x, float y) {
     ;
 }
 
-Form createRandomFigure(int x, int y, int maxSize) {
-    Form f;
-
-    switch (rand() % 6) {
-    case RECTANGLE:
-        f = newRectangle(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-        break;
-    case SQUARE:
-        f = newSquare(x, y, (rand() % (maxSize / 4)));
-        break;
-    case CIRCLE:
-        f = newCircle(x, y, (rand() % (maxSize / 4)));
-        break;
-    case TRIANGLE_ISO:
-        f = newTriangleIso(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-        break;
-    case TRIANGLE_EQ:
-        f = newTriangleEq(x, y, (rand() % (maxSize / 4)));
-        break;
-    case HEXAGON:
-        f = newHexagon(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-        break;
-    default:
-        f = newRectangle(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-        break;
-    }
-
-    return f;
-
-}
-
-Form createRandomFigure2(int type, int x, int y, int maxSize) {
-    Form f;
-
-    switch (type) {
-        case RECTANGLE:
-            f = newRectangleC(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-            break;
-        case SQUARE:
-            f = newSquareC(x, y, (rand() % (maxSize / 4)));
-            break;
-        case CIRCLE:
-            f = newCircleC(x, y, (rand() % (maxSize / 4)));
-            break;
-        case TRIANGLE_ISO:
-            f = newTriangleIsoC(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-            break;
-        case TRIANGLE_EQ:
-            f = newTriangleEqC(x, y, (rand() % (maxSize / 4)));
-            break;
-        case HEXAGON:
-            f = newHexagonC(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-            break;
-        default:
-            f = newRectangleC(x, y, (rand() % (maxSize / 4)), (rand() % (maxSize / 4)));
-            break;
-    }
-
-    return f;
-
-}
-
 void drawRectangle(Form f) {
 
     glColor3f(f->r, f->g, f->b);
@@ -314,37 +245,48 @@ void drawRectangle(Form f) {
         glVertex2f(f->x + f->xSize, f->y);
     glEnd();
 
-    glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_LINE_LOOP);
-        glVertex2f(f->x, f->y);
-        glVertex2f(f->x, f->y + f->ySize);
-        glVertex2f(f->x + f->xSize, f->y + f->ySize);
-        glVertex2f(f->x + f->xSize, f->y);
-    glEnd();
+    if (f->boundingBox == 1) {
+        glColor3f(0.0, 1.0, 0.0);
+            glBegin(GL_LINE_LOOP);
+            glVertex2f(f->x, f->y);
+            glVertex2f(f->x, f->y + f->ySize);
+            glVertex2f(f->x + f->xSize, f->y + f->ySize);
+            glVertex2f(f->x + f->xSize, f->y);
+        glEnd();
+    }
 
 
 }
 
 void drawTriangle(Form f) {
     glColor3f(f->r, f->g, f->b);
-    glBegin(GL_TRIANGLE_FAN);
+    glBegin(GL_TRIANGLES);
         glVertex2f(f->x, f->y);
         glVertex2f(f->x + (f->xSize / 2), f->y + f->ySize);
         glVertex2f(f->x + f->xSize, f->y);
     glEnd();
 
+    if (f->boundingBox == 1) {
+        glColor3f(0.0, 1.0, 0.0);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(f->x, f->y);
+        glVertex2f(f->x, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y);
+        glEnd();
+    }
+
 
     //glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
-    glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_LINE_LOOP);
-        glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2.0), f->y + f->ySize);
-        glVertex2f(f->x + f->xSize, f->y);
-    glEnd();
+    // glColor3f(1.0, 1.0, 1.0);
+    // glBegin(GL_LINE_LOOP);
+    //     glVertex2f(f->x, f->y);
+    //     glVertex2f(f->x + (f->xSize / 2.0), f->y + f->ySize);
+    //     glVertex2f(f->x + f->xSize, f->y);
+    // glEnd();
 }
 
 void drawCircle(Form f, float radius, float faces) {
-
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
 
@@ -361,26 +303,15 @@ void drawCircle(Form f, float radius, float faces) {
 
     glEnd();
 
-}
-
-void drawTriangleEq(Form f) {
-
-
-    glColor3f(f->r, f->g, f->b);
-    glBegin(GL_TRIANGLE_FAN);
+    if (f->boundingBox == 1) {
+        glColor3f(0.0, 1.0, 0.0);
+        glBegin(GL_LINE_LOOP);
         glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2), f->y + (f->ySize) );
-        glVertex2f(f->x + (f->xSize), f->y);
-    glEnd();
-
-
-    //glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
-    glColor3f(1.0, 1.0, 1.0);
-    glBegin(GL_LINE_LOOP);
-        glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2), f->y + (f->ySize));
-        glVertex2f(f->x + (f->xSize), f->y);
-    glEnd();
+        glVertex2f(f->x, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y);
+        glEnd();
+    }
 
 }
 
@@ -419,6 +350,16 @@ void drawStar(Form f) {
         glVertex2f(x2, y2);
     }
     glEnd();
+
+    if (f->boundingBox == 1) {
+        glColor3f(0.0, 1.0, 0.0);
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(f->x, f->y);
+        glVertex2f(f->x, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y);
+        glEnd();
+    }
 
 }
 
@@ -542,6 +483,7 @@ void drawForm(Form f) {
         drawRectangle(f);
         break;
     case TRIANGLE_ISO:
+    case TRIANGLE_EQ:
         drawTriangle(f);
         break;
     case SQUARE:
@@ -552,9 +494,6 @@ void drawForm(Form f) {
         break;
     case CIRCLE:
         drawCircle(f, f->xSize/2, 50);
-        break;
-    case TRIANGLE_EQ:
-        drawTriangleEq(f);
         break;
     case STAR:
         drawStar(f);

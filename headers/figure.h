@@ -24,6 +24,7 @@ struct form {
     float y;
     float xSize, ySize;
 
+    int boundingBox;
     float r, g, b;
 };
 
@@ -48,18 +49,15 @@ Form newStar(float x, float y, float xSize, float ySize);
 //Check if XY is inside form
 int pickForm(Form f, float x, float y);
 
-Form createRandomFigure(int x, int y, int maxSize);
-Form createRandomFigure2(int type, int x, int y, int maxSize);
-
 void recalculate(Form f, float x, float y);
 void changeSecondPoint(Form f, float x, float y);
 void getBGColor(Form f, float *c);
 void deleteForm(Form f);
-void updateForm(Form f, float dx, float dy);
 void printfForm(Form f);
 void drawForm(Form f);
 void setBackgroundColor(Form f, float r, float g, float b);
 void changeFormPosition(Form f, float x, float y);
+void formatSize(Form f);
 
 Form newInsertMode(float x, float y, float side);
 Form newDeleteMode(float x, float y, float side);
