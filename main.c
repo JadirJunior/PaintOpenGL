@@ -27,6 +27,7 @@ float deltaColor = 0.1;
 int creatingForm = 0;
 int moving = 0;
 int resizing = 0;
+int selected = 0;
 
 Form selectedForm = NULL;
 
@@ -138,6 +139,7 @@ void moveModeCanvas(float x, float y) {
         if (selectedForm != NULL)
         {
             moving = 1;
+            selected= 1;
         }
     }
 }
@@ -222,6 +224,8 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 printf("Region active\n");
                 break;
             case REGION_COLOR:
+                if (selectedForm && moving) {
+                }
                 pickColor(activeColor, x, y);
                 rState = activeColor->r;
                 gState = activeColor->g;
