@@ -22,6 +22,9 @@ int actualState = MODE_INSERT;
 float rState = 1.0;
 float gState = 1.0;
 float bState = 1.0;
+float rBorderState = 1.0;
+float gBorderState = 1.0;
+float bBorderState = 1.0;
 float deltaColor = 0.1;
 
 int creatingForm = 0;
@@ -111,6 +114,7 @@ void insertModeCanvas(int x, int y)
         }
 
         setBackgroundColor(selectedForm, rState, gState, bState);
+        setBorderColor(selectedForm, rBorderState, gBorderState, bBorderState);
 
         printf("Points no form:  %d\n", selectedForm->points);
 
@@ -249,27 +253,40 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y)
 
     if (region != -1)
     {
-        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+        if (state == GLUT_DOWN)
         {
+            int isBorder = 0;
             switch (region)
             {
             case REGION_ACTIVE:
                 printf("Region active\n");
                 break;
             case REGION_COLOR:
+
+                if (button == GLUT_RIGHT_BUTTON) isBorder = 1;
                 if (selectedForm != NULL && selected)
                 {
-                    pickColor(selectedForm, x, y);
+                    pickColor(selectedForm, x, y, isBorder);
                 }
                 else
                 {
-                    pickColor(activeColor, x, y);
-                    rState = activeColor->r;
-                    gState = activeColor->g;
-                    bState = activeColor->b;
+                    pickColor(activeColor, x, y, isBorder);
+                    if (isBorder)
+                    {
+                      rBorderState = activeColor->rBorder;
+                      gBorderState = activeColor->gBorder;
+                      bBorderState = activeColor->bBorder;
+                    } else
+                    {
+                        rState = activeColor->r;
+                        gState = activeColor->g;
+                        bState = activeColor->b;
+                    }
+
                 }
                 break;
             case REGION_FORMS:
+                if (button != GLUT_LEFT_BUTTON) return;
                 if (selected == 1 && selectedForm != NULL)
                 {
                     pickChangeForm(selectedForm, x, y);
@@ -293,6 +310,7 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y)
                 }
                 break;
             case REGION_MODE:
+                if (button != GLUT_LEFT_BUTTON) return;
                 resetStates();
                 pickChangeMode(activeColor, &actualState, x, y);
                 resetStates();

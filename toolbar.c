@@ -228,7 +228,7 @@ void createToolBar(Form actualForm, const float toolBarX, const float toolBarY) 
     setMode();
 }
 
-void pickColor(Form actualForm, float x, float y) {
+void pickColor(Form actualForm, float x, float y, int isBorder) {
     Form f = NULL;
     for (int i = 0; i < nPalettes;i++)
     {
@@ -238,11 +238,23 @@ void pickColor(Form actualForm, float x, float y) {
         }
     }
     if (f == NULL) return;
-    int r, g, b;
-    r = f->r;
-    g = f->g;
-    b = f->b;
-    setBackgroundColor(actualForm, r, g, b);
+
+    if (isBorder)
+    {
+        float r, g, b;
+        r = f->r;
+        g = f->g;
+        b = f->b;
+        setBorderColor(actualForm, r, g, b);
+    } else
+    {
+        float r, g, b;
+        r = f->r;
+        g = f->g;
+        b = f->b;
+        setBackgroundColor(actualForm, r, g, b);
+    }
+
 }
 
 void pickChangeForm(Form actualForm, float x, float y)

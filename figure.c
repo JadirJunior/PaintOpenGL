@@ -51,6 +51,10 @@ Form newForm(float x, float y, float xSize, float ySize, int type) {
     f->g = 1.0;
     f->b = 1.0;
 
+    f->rBorder = 1.0;
+    f->gBorder = 1.0;
+    f->bBorder = 1.0;
+
     f->points = 5;
     f->boundingBox = 0;
 
@@ -159,6 +163,12 @@ void setBackgroundColor(Form f, float r, float g, float b) {
     f->b = b;
 }
 
+void setBorderColor(Form f, float r, float g, float b) {
+    f->rBorder = r;
+    f->gBorder = g;
+    f->bBorder = b;
+}
+
 Form newInsertMode(float x, float y, float side) {
     return newForm(x, y, side, side, MODE_INSERT);
 }
@@ -259,13 +269,16 @@ void drawRectangle(Form f) {
 
     if (f->boundingBox == 1) {
         glColor3f(0.0, 1.0, 0.0);
-            glBegin(GL_LINE_LOOP);
-            glVertex2f(f->x, f->y);
-            glVertex2f(f->x, f->y + f->ySize);
-            glVertex2f(f->x + f->xSize, f->y + f->ySize);
-            glVertex2f(f->x + f->xSize, f->y);
-        glEnd();
+    } else {
+        glColor3f(f->rBorder, f->gBorder, f->bBorder);
     }
+
+    glBegin(GL_LINE_LOOP);
+        glVertex2f(f->x, f->y);
+        glVertex2f(f->x, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y + f->ySize);
+        glVertex2f(f->x + f->xSize, f->y);
+    glEnd();
 
 
 }
@@ -288,14 +301,12 @@ void drawTriangle(Form f) {
         glEnd();
     }
 
-
-    //glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
-    // glColor3f(1.0, 1.0, 1.0);
-    // glBegin(GL_LINE_LOOP);
-    //     glVertex2f(f->x, f->y);
-    //     glVertex2f(f->x + (f->xSize / 2.0), f->y + f->ySize);
-    //     glVertex2f(f->x + f->xSize, f->y);
-    // glEnd();
+    glColor3f(f->rBorder, f->gBorder, f->bBorder);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(f->x, f->y);
+    glVertex2f(f->x + (f->xSize / 2), f->y + f->ySize);
+    glVertex2f(f->x + f->xSize, f->y);
+    glEnd();
 }
 
 void drawCircle(Form f, float radius, float faces) {
@@ -324,6 +335,32 @@ void drawCircle(Form f, float radius, float faces) {
         glVertex2f(f->x + f->xSize, f->y);
         glEnd();
     }
+
+    if (f->type == CIRCLE)
+    {
+        glColor3f(f->rBorder, f->gBorder, f->bBorder);
+        glBegin(GL_LINES);
+        for (float i = 0; i < 2*PI; i += PI/250) {
+            float x = centerX + radius * cos(i);
+            float y = centerY + radius * sin(i);
+
+            glVertex2f(x, y);
+        }
+
+        glEnd();
+    } else {
+        glColor3f(f->rBorder, f->gBorder, f->bBorder);
+        glBegin(GL_LINES);
+        for (float i = 0; i < 2*PI; i += step) {
+            float x = centerX + radius * cos(i);
+            float y = centerY + radius * sin(i);
+
+            glVertex2f(x, y);
+        }
+
+        glEnd();
+    }
+
 
 }
 
@@ -374,6 +411,24 @@ void drawStar(Form f) {
         glVertex2f(f->x + f->xSize, f->y);
         glEnd();
     }
+
+    glColor3f(f->rBorder, f->gBorder, f->bBorder);
+    glBegin(GL_LINES);
+    for (float i = PI / 12; i < 2 * PI; i += step) {
+        float x = centerX + radius * cos(i);
+        float y = centerY + radius * sin(i);
+
+        glVertex2f(x, y);
+
+        glVertex2f(x + radius*cos(i + step), y + radius*sin(i + step));
+
+
+        float x2 = centerX + radius * cos(i + step);
+        float y2 = centerY + radius * sin(i + step);
+
+        glVertex2f(x2, y2);
+    }
+    glEnd();
 
 }
 

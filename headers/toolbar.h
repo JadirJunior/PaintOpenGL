@@ -33,7 +33,7 @@ void createToolBar(Form actualForm, float toolBarX, float toolBarY);
 
 void resize(float newWidth, float newHeight);
 void drawToolBar();
-void pickColor(Form actualForm, float x, float y);
+void pickColor(Form actualForm, float x, float y, int isBorder);
 void pickChangeForm(Form actualForm, float x, float y);
 void pickChangeFormAndSize(Form actualForm, float x, float y);
 void pickChangeMode(Form activeColor,int *actualMode, float x, float y);

@@ -29,6 +29,8 @@ struct form {
     int points;
     int boundingBox;
     float r, g, b;
+
+    float rBorder, gBorder, bBorder;
 };
 
 
@@ -59,6 +61,7 @@ void deleteForm(Form f);
 void printfForm(Form f);
 void drawForm(Form f);
 void setBackgroundColor(Form f, float r, float g, float b);
+void setBorderColor(Form f, float r, float g, float b);
 void changeFormPosition(Form f, float x, float y);
 void formatSize(Form f);
 
