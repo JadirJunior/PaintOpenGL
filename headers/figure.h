@@ -15,6 +15,8 @@
 #define MODE_MOVE 13
 #define MODE_RESIZE 14
 #define MODE_CLEAR_SCREEN 15
+#define MODE_ADD_POINTS 16
+#define MODE_REMOVE_POINTS 17
 
 typedef struct form* Form;
 
@@ -24,6 +26,7 @@ struct form {
     float y;
     float xSize, ySize;
 
+    int points;
     int boundingBox;
     float r, g, b;
 };
@@ -64,7 +67,9 @@ Form newDeleteMode(float x, float y, float side);
 Form newResizeMode(float x, float y, float side);
 Form newCleanScreenMode(float x, float y, float side);
 Form newMoveMode(float x, float y, float side);
+Form newAddPointsMode(float x, float y, float side);
+Form newRemovePointsMode(float x, float y, float side);
 
-
-
+void setStarFaces(int faces);
+int getStarFaces();
 #endif

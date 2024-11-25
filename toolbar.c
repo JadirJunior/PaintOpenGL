@@ -20,7 +20,7 @@ int nForms = 7;
 
 //Formas para alterar o modo
 Form* modes;
-int nModes = 5;
+int nModes = 7;
 
 //Tamanho da toolbar
 float ySize = 40;
@@ -198,6 +198,14 @@ void setMode()
     modes[4] = newMoveMode(xStartMode + 120, ySize / 2 - 10, 20);
     setBackgroundColor(modes[4], r, g, b); // Cor laranja para mover
 
+    // Adicionando pontas na estrela
+    modes[5] = newAddPointsMode(xStartMode + 150, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[5], 1.0, 1.0, 0.0);
+
+    //Removendo pontas na estrela
+    modes[6] = newRemovePointsMode(xStartMode + 180, ySize / 2 - 10, 20);
+    setBackgroundColor(modes[6], 1.0, 0.0, 0.0);
+
 }
 
 
@@ -250,6 +258,8 @@ void pickChangeForm(Form actualForm, float x, float y)
     if (f == NULL) return;
     int type = f->type;
     actualForm->type = type;
+    printf("Setando Points no Form: %d", f->points);
+    actualForm->points = f->points;
 }
 
 void pickChangeFormAndSize(Form actualForm, float x, float y) {
@@ -269,10 +279,11 @@ void pickChangeFormAndSize(Form actualForm, float x, float y) {
     actualForm->ySize = f->ySize;
     actualForm->x = actualForm->x + (actualForm->xSize - f->xSize) / 2;
     actualForm->y = actualForm->y + (actualForm->ySize - f->ySize) / 2;
+    actualForm->points = f->points;
 }
 
 
-void pickChangeMode(int *actualMode, float x, float y) {
+void pickChangeMode(Form activeColor, int *actualMode, float x, float y) {
     Form f = NULL;
     for (int i = 0; i < nModes;i++) {
         if(modes[i] != NULL) {
@@ -282,13 +293,27 @@ void pickChangeMode(int *actualMode, float x, float y) {
                 f = modes[i];
             }
         }
-
     }
 
     if (f == NULL) return;
 
-    *actualMode = f->type;
-    setBackgroundColor(f, 0, 1,0);
+    if (f->type == MODE_ADD_POINTS) {
+        forms[4]->points = forms[4]->points + 1 > 10 ? 10 : forms[4]->points + 1;
+        if (activeColor->type == STAR)
+        {
+            activeColor->points = forms[4]->points;
+        }
+
+    } else if (f->type == MODE_REMOVE_POINTS) {
+        forms[4]->points = forms[4]->points - 1 < 5 ? 5 : forms[4]->points - 1;
+        if (activeColor->type == STAR)
+        {
+            activeColor->points = forms[4]->points;
+        }
+    } else {
+        *actualMode = f->type;
+        setBackgroundColor(f, 0, 1,0);
+    }
 }
 
 

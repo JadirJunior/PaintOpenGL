@@ -40,7 +40,8 @@ int yLastClick;
 int yToolBarSize = 40;
 
 
-void displayForms() {
+void displayForms()
+{
     srand(time(NULL));
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -56,24 +57,30 @@ void displayForms() {
     glFlush();
 }
 
-void deleteScreenForm(int x, int y) {
+void deleteScreenForm(int x, int y)
+{
     Form f = pick(x, y);
-    if (f != NULL) {
+    if (f != NULL)
+    {
         printfForm(f);
         deleteFormDBForms(f);
         glutPostRedisplay();
     }
-    else {
+    else
+    {
         printf("NO Form..\n");
     }
 }
 
 void resetStates()
 {
-    if (selectedForm != NULL && creatingForm == 1) {
+    if (selectedForm != NULL && creatingForm == 1)
+    {
         deleteFormDBForms(selectedForm);
         creatingForm = 0;
-    } else if (selectedForm != NULL) {
+    }
+    else if (selectedForm != NULL)
+    {
         selectedForm->boundingBox = 0;
         selectedForm = NULL;
         selected = 0;
@@ -81,39 +88,53 @@ void resetStates()
     }
 }
 
-void insertModeCanvas(int x, int y) {
-    if (creatingForm) {
+void insertModeCanvas(int x, int y)
+{
+    if (creatingForm)
+    {
         recalculate(selectedForm, x, y);
         creatingForm = 0;
         selectedForm = NULL;
         glutPostRedisplay();
     }
-    else {
+    else
+    {
         //First click
-        if (type == CIRCLE) {
+        if (type == CIRCLE)
+        {
             selectedForm = newCircle2Point(x, y, x, y);
-        } else {
+        }
+        else
+        {
             selectedForm = newForm2Point(x, y, x, y, type);
+            selectedForm->points = activeColor->points;
         }
 
         setBackgroundColor(selectedForm, rState, gState, bState);
 
-        if (!insertDBForm(selectedForm)) {
+        printf("Points no form:  %d\n", selectedForm->points);
+
+        if (!insertDBForm(selectedForm))
+        {
             printf("MEMORY FULL!!\n");
             deleteForm(selectedForm);
             selectedForm = NULL;
-        } else {
+        }
+        else
+        {
             creatingForm = 1;
             glutPostRedisplay();
         }
     }
 }
 
-void deleteModeCanvas(int x, int y) {
+void deleteModeCanvas(int x, int y)
+{
     deleteScreenForm(x, y);
 }
 
-void clearScreenCanvas() {
+void clearScreenCanvas()
+{
     glClear(GL_COLOR_BUFFER_BIT);
     glutSwapBuffers();
     //free em todas as formas
@@ -121,105 +142,127 @@ void clearScreenCanvas() {
     glutPostRedisplay();
 }
 
-void moveModeCanvas(float x, float y) {
-
-    if (moving == 0) {
+void moveModeCanvas(float x, float y)
+{
+    if (moving == 0)
+    {
         selectedForm = pick(x, y);
 
         if (selectedForm != NULL)
         {
             moving = 1;
-            selected= 1;
+            selected = 1;
             selectedForm->boundingBox = 1;
         }
     }
 }
 
-void resizeModeCanvas(float x, float y) {
-    if (resizing == 0 && selectedForm == NULL) {
+void resizeModeCanvas(float x, float y)
+{
+    if (resizing == 0 && selectedForm == NULL)
+    {
         selectedForm = pick(x, y);
 
-        if (selectedForm != NULL) {
+        if (selectedForm != NULL)
+        {
             resizing = 1;
         }
-    } else if (resizing == 1) {
+    }
+    else if (resizing == 1)
+    {
         resizing = 0;
         selectedForm = NULL;
     }
 }
 
-void myMouseCanvas(GLint button, GLint state, GLint x, GLint y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+void myMouseCanvas(GLint button, GLint state, GLint x, GLint y)
+{
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+    {
         printf("LEFT BUTTON RELEASED\n");
-        if (moving) {
+        if (moving)
+        {
             moving = 0;
-            if (selected == 0) {
+            if (selected == 0)
+            {
                 selectedForm == NULL;
             }
         }
     }
 
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+    {
         printf("LEFT BUTTON PRESSED\n");
-        switch (actualState) {
-            case MODE_INSERT:
-                selected = 0;
-                insertModeCanvas(x, y);
-                break;
-            case MODE_DELETE:
-                selected = 0;
-                deleteModeCanvas(x, y);
-                break;
-            case MODE_CLEAR_SCREEN:
-                selected = 0;
-                //free em todas as figuras que tem e atualiza a tela
-                clearScreenCanvas();
-                break;
-            case MODE_MOVE:
-                moveModeCanvas(x, y);
-                break;
-            case MODE_RESIZE:
-                selected = 0;
-                resizeModeCanvas(x, y);
-                break;
+        switch (actualState)
+        {
+        case MODE_INSERT:
+            selected = 0;
+            insertModeCanvas(x, y);
+            break;
+        case MODE_DELETE:
+            selected = 0;
+            deleteModeCanvas(x, y);
+            break;
+        case MODE_CLEAR_SCREEN:
+            selected = 0;
+        //free em todas as figuras que tem e atualiza a tela
+            clearScreenCanvas();
+            break;
+        case MODE_MOVE:
+            moveModeCanvas(x, y);
+            break;
+        case MODE_RESIZE:
+            selected = 0;
+            resizeModeCanvas(x, y);
+            break;
         }
     }
 }
 
-void mouseMotion(int x, int y) {
+void mouseMotion(int x, int y)
+{
     y = windowHeight - y;
 
-    if (moving) {
+    if (moving)
+    {
         changeFormPosition(selectedForm, x, y);
         glutPostRedisplay();
     }
 }
 
-void mousePassiveMotion(int x, int y) {
+void mousePassiveMotion(int x, int y)
+{
     y = windowHeight - y;
 
-    if (creatingForm || resizing) {
+    if (creatingForm || resizing)
+    {
         changeSecondPoint(selectedForm, x, y);
         glutPostRedisplay();
     }
 }
 
-void mouseClick(GLint button, GLint state, GLint x, GLint y) {
-
+void mouseClick(GLint button, GLint state, GLint x, GLint y)
+{
     y = windowHeight - y;
     int region = pickRegion(x, y);
 
-    if (region != -1) {
 
-        switch (region)
+    if (region != -1)
+    {
+        if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
         {
+            switch (region)
+            {
             case REGION_ACTIVE:
                 printf("Region active\n");
                 break;
             case REGION_COLOR:
-                if (selectedForm != NULL && selected) {
+                if (selectedForm != NULL && selected)
+                {
                     pickColor(selectedForm, x, y);
-                } else {
+                }
+                else
+                {
                     pickColor(activeColor, x, y);
                     rState = activeColor->r;
                     gState = activeColor->g;
@@ -227,19 +270,23 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 }
                 break;
             case REGION_FORMS:
-                if (selected==1 && selectedForm != NULL) {
+                if (selected == 1 && selectedForm != NULL)
+                {
                     pickChangeForm(selectedForm, x, y);
 
-                    switch (selectedForm->type) {
-                        case CIRCLE:
-                        case HEXAGON:
-                        case STAR:
-                        case SQUARE:
-                        case TRIANGLE_EQ:
-                            formatSize(selectedForm);
-                            break;
+                    switch (selectedForm->type)
+                    {
+                    case CIRCLE:
+                    case HEXAGON:
+                    case STAR:
+                    case SQUARE:
+                    case TRIANGLE_EQ:
+                        formatSize(selectedForm);
+                        break;
                     }
-                } else {
+                }
+                else
+                {
                     pickChangeFormAndSize(activeColor, x, y);
                     type = activeColor->type;
                     setBackgroundColor(activeColor, rState, gState, bState);
@@ -247,27 +294,31 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y) {
                 break;
             case REGION_MODE:
                 resetStates();
-                pickChangeMode(&actualState, x, y);
+                pickChangeMode(activeColor, &actualState, x, y);
                 resetStates();
                 if (actualState == MODE_CLEAR_SCREEN) deleteAllForms();
                 break;
             default:
                 printf("Resto\n");
                 break;
+            }
         }
     }
-    else {
+    else
+    {
         myMouseCanvas(button, state, x, y);
     }
 }
 
-void init(int width, int height) {
+void init(int width, int height)
+{
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0.0, width, 0.0, height);
 }
 
-void reShape(int width, int height) {
+void reShape(int width, int height)
+{
     windowHeight = height;
     windowWidth = width;
     resize(windowWidth, yToolBarSize);
@@ -275,8 +326,9 @@ void reShape(int width, int height) {
     init(width, height);
 }
 
-void setupOpenGL() {
-    int screenWidth = glutGet(GLUT_SCREEN_WIDTH);   // Largura da tela
+void setupOpenGL()
+{
+    int screenWidth = glutGet(GLUT_SCREEN_WIDTH); // Largura da tela
     int screenHeight = glutGet(GLUT_SCREEN_HEIGHT); // Altura da tela
 
     glutInitDisplayMode(GLUT_SINGLE);
@@ -292,8 +344,8 @@ void setupOpenGL() {
     glutMainLoop();
 }
 
-int main(int argc, char** argv) {
-
+int main(int argc, char** argv)
+{
     srand(time(NULL));
     cont = 0;
     initDBForms(10);

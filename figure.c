@@ -11,9 +11,10 @@
 #define PI 3.1415
 //TODO: REFACTORS
 /*
-    trocar numero de faces da estrela
+    Trocar a cor das bordas das figuras
  */
 
+int starFaces = 7;
 
 void recalculatingPoints(float* xi, float* yi, float* xf, float* yf) {
     float aux1, aux2;
@@ -50,6 +51,7 @@ Form newForm(float x, float y, float xSize, float ySize, int type) {
     f->g = 1.0;
     f->b = 1.0;
 
+    f->points = 5;
     f->boundingBox = 0;
 
     f->type = type;
@@ -173,6 +175,16 @@ Form newCleanScreenMode(float x, float y, float side) {
 }
 Form newMoveMode(float x, float y, float side) {
     return newForm(x, y, side, side, MODE_MOVE);
+}
+
+Form newAddPointsMode(float x, float y, float side)
+{
+    return newForm(x, y, side, side, MODE_ADD_POINTS);
+}
+
+Form newRemovePointsMode(float x, float y, float side)
+{
+    return newForm(x, y, side, side, MODE_REMOVE_POINTS);
 }
 
 
@@ -318,9 +330,11 @@ void drawCircle(Form f, float radius, float faces) {
 void drawStar(Form f) {
 
     float radius = f->xSize / 4;
-    float faces = 10;
+    float faces = f->points;
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
+
+    printf("Points: %f\n", faces);
 
     float step = (2 * PI) / faces;
 
@@ -362,6 +376,14 @@ void drawStar(Form f) {
     }
 
 }
+
+void setStarFaces(int faces)
+{
+    starFaces = faces;
+}
+
+
+int getStarFaces() {return starFaces;}
 
 void drawInsert(Form f) {
     float xCenter = f->x + (f->xSize / 2);
@@ -465,54 +487,67 @@ void drawIconResize(Form f) {
 
 void drawClearScreenIcon(Form f) {
     //validar se a tela ta limpa ou nao deixar verde(nao tem nada para limpar) ou vermelho(tem coisa para limpar)
-
-
     drawRectangle(f);
     setBackgroundColor(f, 1, 0, 0);
     drawX(f);
 
 }
 
+void drawRemovePoints(Form f)
+{
+    float xCenter = f->x + (f->xSize / 2);
+    float yCenter = f->y + (f->ySize / 2);
 
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_LINES);
+    glVertex2f(xCenter, yCenter);
+    glVertex2f(xCenter + f->xSize/2, yCenter);
+    glEnd();
+}
 
 
 void drawForm(Form f) {
 
     switch (f->type) {
-    case RECTANGLE:
-        drawRectangle(f);
-        break;
-    case TRIANGLE_ISO:
-    case TRIANGLE_EQ:
-        drawTriangle(f);
-        break;
-    case SQUARE:
-        drawRectangle(f);
-        break;
-    case HEXAGON:
-        drawCircle(f, f->xSize/2, 6);
-        break;
-    case CIRCLE:
-        drawCircle(f, f->xSize/2, 50);
-        break;
-    case STAR:
-        drawStar(f);
-        break;
-    case MODE_INSERT:
-        drawInsert(f);
-        break;
-    case MODE_DELETE:
-        drawX(f);
-        break;
-    case MODE_MOVE:
-        drawIconMove(f);
-        break;
-    case MODE_RESIZE:
-        drawIconResize(f);
-        break;
-    case MODE_CLEAR_SCREEN:
-        drawClearScreenIcon(f);
-        break;
+        case RECTANGLE:
+            drawRectangle(f);
+            break;
+        case TRIANGLE_ISO:
+        case TRIANGLE_EQ:
+            drawTriangle(f);
+            break;
+        case SQUARE:
+            drawRectangle(f);
+            break;
+        case HEXAGON:
+            drawCircle(f, f->xSize/2, 6);
+            break;
+        case CIRCLE:
+            drawCircle(f, f->xSize/2, 50);
+            break;
+        case STAR:
+            drawStar(f);
+            break;
+        case MODE_INSERT:
+            drawInsert(f);
+            break;
+        case MODE_DELETE:
+            drawX(f);
+            break;
+        case MODE_MOVE:
+            drawIconMove(f);
+            break;
+        case MODE_RESIZE:
+            drawIconResize(f);
+            break;
+        case MODE_CLEAR_SCREEN:
+            drawClearScreenIcon(f);
+            break;
+        case MODE_ADD_POINTS:
+            drawInsert(f);
+            break;
+        case MODE_REMOVE_POINTS:
+            drawRemovePoints(f);
     }
 }
 
