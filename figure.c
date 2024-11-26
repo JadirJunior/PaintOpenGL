@@ -371,8 +371,6 @@ void drawStar(Form f) {
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
 
-    printf("Points: %f\n", faces);
-
     float step = (2 * PI) / faces;
 
     glColor3f(f->r, f->g, f->b);

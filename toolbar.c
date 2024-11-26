@@ -299,7 +299,8 @@ void pickChangeMode(Form activeColor, int *actualMode, float x, float y) {
     Form f = NULL;
     for (int i = 0; i < nModes;i++) {
         if(modes[i] != NULL) {
-            setBackgroundColor(modes[i], 1,1,1);
+            if (modes[i]->type != MODE_ADD_POINTS && modes[i]->type != MODE_REMOVE_POINTS)
+                setBackgroundColor(modes[i], 1,1,1);
 
             if (pickForm(modes[i], x, y)) {
                 f = modes[i];

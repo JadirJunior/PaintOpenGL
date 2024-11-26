@@ -352,7 +352,7 @@ void setupOpenGL()
     glutInitDisplayMode(GLUT_SINGLE);
     glutInitWindowSize(windowWidth, windowHeight);
     glutInitWindowPosition((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2);
-    glutCreateWindow("Janela para figuras");
+    glutCreateWindow("Main Screen");
     init(windowWidth, windowHeight);
     glutDisplayFunc(displayForms);
     glutMouseFunc(mouseClick);
