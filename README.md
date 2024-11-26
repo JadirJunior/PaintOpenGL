@@ -7,7 +7,7 @@
 
 ## Features
 - Draw different forms: 
-  - square; 
+  - Square; 
   - Rectangle; 
   - Circle;
   - Triangle isoceles; 
