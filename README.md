@@ -7,12 +7,13 @@
 
 ## Features
 - Draw different forms: 
-  - Square; 
-  - Rectangle; 
+  - Square;
   - Circle;
-  - Triangle isoceles; 
+  - Triangle isoceles;
   - Hexagon;
   - Star;
+  - Triangle Equilateral;
+  - Rectangle;
 - Set forms and border colors;
 - Change the color of the forms and borders;
 - Change the size of the forms;
