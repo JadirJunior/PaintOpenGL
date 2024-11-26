@@ -16,6 +16,7 @@
 - Set forms and border colors;
 - Change the color of the forms and borders;
 - Change the size of the forms;
+- Change the type of the forms;
 - Change the position of the forms;
 - Change the number of star points;
 - Erasing forms;
