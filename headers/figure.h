@@ -73,6 +73,6 @@ Form newMoveMode(float x, float y, float side);
 Form newAddPointsMode(float x, float y, float side);
 Form newRemovePointsMode(float x, float y, float side);
 
-void setStarFaces(int faces);
-int getStarFaces();
+int getStarPoints();
+void setStarPoints(int starPoints);
 #endif

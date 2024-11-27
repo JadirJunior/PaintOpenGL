@@ -9,12 +9,8 @@
 #define FREEGLUT_LIB_PRAGMAS 0
 
 #define PI 3.1415
-//TODO: REFACTORS
-/*
-    Trocar a cor das bordas das figuras
- */
 
-int starFaces = 7;
+int starPoints = 5;
 
 void recalculatingPoints(float* xi, float* yi, float* xf, float* yf) {
     float aux1, aux2;
@@ -94,7 +90,6 @@ Form newRectangle2Point(float xi, float yi, float xf, float yf) {
 }
 
 Form newForm2Point(float xi, float yi, float xf, float yf, int type) {
-    //recalculatingPoints(&xi, &yi, &xf, &yf);
 
     return newForm(xi, yi, xf-xi, yf-yi, type);
 }
@@ -202,6 +197,7 @@ void changeSecondPoint(Form f, float x, float y)
 {
     f->xSize = x - f->x;
     f->ySize = y - f->y;
+
     if (f->type == SQUARE || f->type == TRIANGLE_EQ || f->type == HEXAGON || f->type == CIRCLE || f->type == STAR) formatSize(f);
 }
 
@@ -211,13 +207,13 @@ void changeFormPosition(Form f, float x, float y) {
 }
 
 void recalculate(Form f, float x, float y) {
-    //recalculatingPoints((&f->x), (&f->y), &x, &y);
     changeSecondPoint(f, x, y);
 
     switch (f->type)
     {
         case SQUARE:
         case CIRCLE:
+        case HEXAGON:
             formatSize(f);
             break;
 
@@ -287,7 +283,7 @@ void drawTriangle(Form f) {
     glColor3f(f->r, f->g, f->b);
     glBegin(GL_TRIANGLES);
         glVertex2f(f->x, f->y);
-        glVertex2f(f->x + (f->xSize / 2), f->y + f->ySize);
+        glVertex2f(f->x + (f->xSize / 2), f->y + (f->ySize));
         glVertex2f(f->x + f->xSize, f->y);
     glEnd();
 
@@ -312,6 +308,9 @@ void drawTriangle(Form f) {
 void drawCircle(Form f, float radius, float faces) {
     float centerX = f->x + (f->xSize / 2);
     float centerY = f->y + (f->ySize / 2);
+
+
+    printf("Desenhando %d\n Faces: %d\n\n", f->type, faces);
 
     float step = (2 * PI) / faces;
 
@@ -360,6 +359,56 @@ void drawCircle(Form f, float radius, float faces) {
 
         glEnd();
     }
+
+
+}
+
+void drawTriangleEq(Form f, float faces) {
+    float centerX = f->x + (f->xSize / 2);
+    float centerY = f->y + (f->ySize / 2);
+    float radius = 2 * ((f->xSize*sqrt(3))/2) / 3;
+
+    float step = (2 * PI) / faces;
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_POLYGON);
+    for (float i = PI/2; i < 2*PI; i += step) {
+        float x = centerX + radius * cos(i);
+        float y = centerY + radius * sin(i);
+
+        glVertex2f(x, y);
+    }
+    glEnd();
+
+    if (f->boundingBox == 1) {
+        // Coordenadas da bounding box do triângulo
+        float top = centerY + (sqrt(3) / 2) * radius;
+        float bottom = centerY - (radius / 2);
+        float left = centerX - radius;
+        float right = centerX + radius;
+
+        glColor3f(0.0, 1.0, 0.0); // Cor da bounding box
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(left, bottom);  // Inferior esquerdo
+        glVertex2f(left, top);     // Superior esquerdo
+        glVertex2f(right, top);    // Superior direito
+        glVertex2f(right, bottom); // Inferior direito
+        glEnd();
+    }
+
+
+
+    // glColor3f(f->rBorder, f->gBorder, f->bBorder);
+    // glBegin(GL_LINES);
+    // for (float i = 0; i < 2*PI; i += step) {
+    //     float x = centerX + radius * cos(i);
+    //     float y = centerY + radius * sin(i);
+    //
+    //     glVertex2f(x, y);
+    // }
+    //
+    // glEnd();
+
 
 
 }
@@ -429,14 +478,6 @@ void drawStar(Form f) {
     glEnd();
 
 }
-
-void setStarFaces(int faces)
-{
-    starFaces = faces;
-}
-
-
-int getStarFaces() {return starFaces;}
 
 void drawInsert(Form f) {
     float xCenter = f->x + (f->xSize / 2);
@@ -558,6 +599,14 @@ void drawRemovePoints(Form f)
     glEnd();
 }
 
+void setStarPoints(int points) {
+    starPoints = points;
+}
+
+int getStarPoints() {
+    return starPoints;
+}
+
 
 void drawForm(Form f) {
 
@@ -566,8 +615,11 @@ void drawForm(Form f) {
             drawRectangle(f);
             break;
         case TRIANGLE_ISO:
-        case TRIANGLE_EQ:
             drawTriangle(f);
+            break;
+        case TRIANGLE_EQ:
+            //drawCircle(f, f->xSize/sqrt(3), 3);
+            drawTriangleEq(f, 3);
             break;
         case SQUARE:
             drawRectangle(f);

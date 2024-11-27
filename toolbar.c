@@ -272,6 +272,7 @@ void pickChangeForm(Form actualForm, float x, float y)
     actualForm->type = type;
     printf("Setando Points no Form: %d", f->points);
     actualForm->points = f->points;
+    setStarPoints(actualForm->points);
 }
 
 void pickChangeFormAndSize(Form actualForm, float x, float y) {
@@ -292,6 +293,7 @@ void pickChangeFormAndSize(Form actualForm, float x, float y) {
     actualForm->x = actualForm->x + (actualForm->xSize - f->xSize) / 2;
     actualForm->y = actualForm->y + (actualForm->ySize - f->ySize) / 2;
     actualForm->points = f->points;
+    setStarPoints(actualForm->points);
 }
 
 
@@ -315,6 +317,7 @@ void pickChangeMode(Form activeColor, int *actualMode, float x, float y) {
         if (activeColor->type == STAR)
         {
             activeColor->points = forms[4]->points;
+            setStarPoints(activeColor->points);
         }
 
     } else if (f->type == MODE_REMOVE_POINTS) {
@@ -322,6 +325,7 @@ void pickChangeMode(Form activeColor, int *actualMode, float x, float y) {
         if (activeColor->type == STAR)
         {
             activeColor->points = forms[4]->points;
+            setStarPoints(activeColor->points);
         }
     } else {
         *actualMode = f->type;

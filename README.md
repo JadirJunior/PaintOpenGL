@@ -104,3 +104,33 @@ Edit an existing form by left-clicking on it. The following actions are availabl
 
 #### 7. **Remove Point Mode**
 - Remove a point from the star form by left-clicking on the tool.
+
+
+## Shortcuts
+```
+You can use some shortcuts to change the forms to draw or 
+while you are editing them, and exit from the application.
+```
+### **1. 'S' or 's'**
+- Change the form to a square.
+
+### **2. 'R' or 'r'**
+- Change the form to a rectangle.
+
+### **3. 'T' or 't'**
+- Change the form to a star.
+
+### **4. 'H' or 'h'**
+- Change the form to a hexagon.
+
+### **5. 'E' or 'e'**
+- Change the form to a triangle equilateral.
+
+### **6. 'I' or 'i'**
+- Change the form to a triangle Isosceles.
+
+### **7. 'C' or 'c'**
+- Change the form to a circle.
+
+### **8. 'Q' or 'q'**
+- Exit from the application.

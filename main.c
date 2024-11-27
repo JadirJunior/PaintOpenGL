@@ -95,7 +95,7 @@ void insertModeCanvas(int x, int y)
 {
     if (creatingForm)
     {
-        recalculate(selectedForm, x, y);
+        changeSecondPoint(selectedForm, x, y);
         creatingForm = 0;
         selectedForm = NULL;
         glutPostRedisplay();
@@ -115,8 +115,6 @@ void insertModeCanvas(int x, int y)
 
         setBackgroundColor(selectedForm, rState, gState, bState);
         setBorderColor(selectedForm, rBorderState, gBorderState, bBorderState);
-
-        printf("Points no form:  %d\n", selectedForm->points);
 
         if (!insertDBForm(selectedForm))
         {
@@ -328,6 +326,101 @@ void mouseClick(GLint button, GLint state, GLint x, GLint y)
     }
 }
 
+void myKey(unsigned char key, int x, int y)
+{
+    y = windowHeight - y;
+
+    if (key == 'Q' || key == 'q') // Quit
+        exit(0);
+
+
+    if (resizing == 1 || moving == 1) return;
+
+    switch (key)
+    {
+    case 'S': case 's': // Square
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = SQUARE;
+        } else
+        {
+            type = SQUARE;
+            activeColor->type = SQUARE;
+        }
+        glutPostRedisplay();
+        break;
+    case 'R': case 'r': // Rectangle
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = RECTANGLE;
+        } else
+        {
+            type = RECTANGLE;
+            activeColor->type = RECTANGLE;
+        }
+        glutPostRedisplay();
+        break;
+    case 'C': case 'c': // Circle
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = CIRCLE;
+        } else
+        {
+            type = CIRCLE;
+            activeColor->type = CIRCLE;
+        }
+        glutPostRedisplay();
+        break;
+    case 'I': case 'i': // Isosceles Triangle
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = TRIANGLE_ISO;
+        } else
+        {
+            type = TRIANGLE_ISO;
+            activeColor->type = TRIANGLE_ISO;
+        }
+        glutPostRedisplay();
+        break;
+    case 'E': case 'e': // Equilateral Triangle
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = TRIANGLE_EQ;
+        } else
+        {
+            type = TRIANGLE_EQ;
+            activeColor->type = TRIANGLE_EQ;
+        }
+        glutPostRedisplay();
+        break;
+    case 'T': case 't': // Star
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = STAR;
+            selectedForm->points = getStarPoints();
+        } else
+        {
+            type = STAR;
+            activeColor->type = STAR;
+            activeColor->points = getStarPoints();
+        }
+        glutPostRedisplay();
+        break;
+    case 'H': case 'h': // Hexagon
+        if (selectedForm != NULL)
+        {
+            selectedForm->type = HEXAGON;
+        } else
+        {
+            type = HEXAGON;
+            activeColor->type = HEXAGON;
+        }
+        glutPostRedisplay();
+        break;
+    }
+}
+
+
 void init(int width, int height)
 {
     glMatrixMode(GL_PROJECTION);
@@ -358,6 +451,7 @@ void setupOpenGL()
     glutMouseFunc(mouseClick);
     glutReshapeFunc(reShape);
     glutPassiveMotionFunc(mousePassiveMotion);
+    glutKeyboardFunc(myKey);
     glutMotionFunc(mouseMotion);
     glutMainLoop();
 }
